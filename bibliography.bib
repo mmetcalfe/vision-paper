@@ -1,0 +1,271 @@
+@article{Yuan2015,
+	title = {Power histogram for circle detection on images},
+	author = {Bodi Yuan and Min Liu},
+	abstract = {Abstract The detection of circles from digital images is very important to shape recognition. In this paper, we propose and analyze a novel method, based on power histograms to detect circles in an image. The key idea is to transform an image into several power histograms that are computed from the pairwise distance products referring to the rays emanated from some reference points on the image. According to the circle power theorem, the edge pixels on a circle share the same circle powers with respect to an arbitrary point on the image. The peaks in the power histograms provide strong evidence for the existence of real circles. A multi-reference cross validation among various peaks can systematically remove randomness and eliminate false detections. Experimental results over several synthetic as well as natural images with varying ranges of complexity validate the efficacy of the proposed method in terms of its accuracy, simplicity, and robustness.},
+	doi = {http://dx.doi.org/10.1016/j.patcog.2015.01.003},
+	issn = {0031-3203},
+	journal = {Pattern Recognition},
+	keywords = {Image processing},
+	url = {http://www.sciencedirect.com/science/article/pii/S0031320315000060},
+	year = {2015}
+}
+
+@article{Pan2011,
+	title = {Fast and Robust Circular Object Detection With Probabilistic Pairwise Voting},
+	author = {Lili Pan and Wen-Sheng Chu and Saragih, J.M. and De la Torre, F. and Mei Xie},
+	abstract = {Accurate and efficient detection of circular objects in images is a challenging computer vision problem. Existing circular object detection methods can be broadly classified into two categories: voting based and maximum likelihood estimation (MLE) based. The former is robust to noise, however its computational complexity and memory requirement are high. On the other hand, MLE based methods (e.g., robust least squares fitting) are more computationally efficient but sensitive to noise, and can not detect multiple circles. This letter proposes Probabilistic Pairwise Voting (PPV), a fast and robust algorithm for circular object detection based on an extension of Hough Transform. The main contributions are threefold. 1) We formulate the problem of circular object detection as finding the intersection of lines in the three dimensional parameter space (i.e., center and radius of the circle). 2) We propose a probabilistic pairwise voting scheme to robustly discover circular objects under occlusion, image noise and moderate shape deformations. 3) We use a mode-finding algorithm to efficiently find multiple circular objects. We demonstrate the benefits of our approach on two real-world problems: 1) detecting circular objects in natural images, and 2) localizing iris in face images.},
+	doi = {10.1109/LSP.2011.2166956},
+	issn = {1070-9908},
+	journal = {Signal Processing Letters, IEEE},
+	keywords = {Hough transforms;computational complexity;computer vision;image denoising;maximum likelihood estimation;object detection;Hough transform;MLE based methods;circular object detection methods;computational complexity;computer vision problem;fast circular object detection;image denoising;maximum likelihood estimation;mode-finding algorithm;probabilistic pairwise voting;robust circular object detection;shape deformations;Accuracy;Face;Image edge detection;Noise;Object detection;Robustness;Shape;Circular Hough Transform;Circular object detection;iris localization},
+	month = {November},
+	number = {11},
+	pages = {639--642},
+	volume = {18},
+	year = {2011}
+}
+
+@incollection{Fusek2014,
+	title = {Distance-Based Descriptors and Their Application in the Task of Object Detection},
+	author = {Fusek, Radovan and Sojka, Eduard},
+	abstract = {In this paper, we propose an efficient and interesting way how
+	to encode the shape of the objects. A lot of state-of-the art descriptors
+	(e.g. HOG, Haar, LBP) are based on the fact that the shape of the objects
+	can be described by brightness differences inside the image. It means that
+	the descriptors encode the gradient or intensity differences inside the
+	image (i.e. edges). In the cases that the edges are very thin, the edge
+	information can be difficult to obtain and the dimensionally of feature
+	vector (without the method for reduction) is typically large and contains
+	redundant information. These ills are motivation for the proposed method
+	in that the edges need not be hit directly; the input brightness function
+	is transformed using the appropriate image distance function. After this
+	transformation, the values of distance function inside objects and
+	backgrounds are different and the values can be used for description of
+	object appearance. We demonstrate the properties of the method for the
+	case of solving the problem of face detection using the classical sliding
+	window technique.},
+	booktitle = {Pattern Recognition},
+	doi = {10.1007/978-3-319-11752-2_40},
+	editor = {Jiang, Xiaoyi and Hornegger, Joachim and Koch, Reinhard},
+	isbn = {978-3-319-11751-5},
+	language = {English},
+	pages = {488--498},
+	publisher = {Springer International Publishing},
+	series = {Lecture Notes in Computer Science},
+	url = {http://dx.doi.org/10.1007/978-3-319-11752-2_40},
+	volume = {8753},
+	year = {2014}
+}
+
+@inproceedings{schulz2007ball,
+	title = {A ball is not just orange: Using color and luminance to classify regions of interest},
+	author = {Schulz, Hannes and Strasdat, Hauke and Behnke, Sven},
+	booktitle = {Proceedings of the Second Workshop on Humanoid Soccer Robots, Pittsburgh, PA, USA},
+	year = {2007}
+}
+
+@inproceedings{nillius2008shading,
+	title = {Shading models for illumination and reflectance invariant shape detectors},
+	author = {Peter Nillius and Josephine Sullivan and Antonis Argyros},
+	address = {Los Alamitos, CA, USA},
+	doi = {http://doi.ieeecomputersociety.org/10.1109/CVPR.2008.4587773},
+	isbn = {978-1-4244-2242-5},
+	booktitle = {Proceedings of the IEEE Computer Society Conference on Computer Vision and Pattern Recognition (CVPR 2014)},
+	pages = {1--8},
+	year = {2008},
+	organization = {IEEE}
+}
+
+@inproceedings{masselli2013haar,
+	title = {Robust real-time detection of multiple balls on a mobile robot},
+	author = {Masselli, A. and Hanten, R. and Zell, A.},
+	abstract = {In this paper, we present a robust method for detecting multiple balls without using color information. The method builds upon the boosted Haar classifier approach introduced by Viola et al. [11] and is applied onto an image from a catadioptric camera without performing rectification of the image. We compare the method with one based on a classical color segmentation approach. Originally both methods have been developed for the participation on the 2012 ``SICK robot day'', an international robotics competition. The task was to collect balls with a robot and put them into dedicated perches within a certain amount of time. Both methods showed to be robust during the competition. Our team placed second out of fifteen contenders.},
+	booktitle = {European Conference on Mobile Robots (ECMR 2013)},
+	doi = {10.1109/ECMR.2013.6698867},
+	keywords = {Hough transforms;cameras;image classification;image colour analysis;mobile robots;object detection;robot vision;SICK robot day;ball collection;boosted Haar classifier approach;catadioptric camera;color information;international robotics competition;mobile robot;robust real-time multiple ball detection;Cameras;Detectors;Image color analysis;Image segmentation;Mobile robots;Training},
+	month = {September},
+	pages = {355--360},
+	year = {2013}
+}
+
+@article{viola2001robust,
+	title = {Robust real-time object detection},
+	author = {Viola, Paul and Jones, Michael},
+	journal = {International Journal of Computer Vision,},
+	pages = {pp. 34--47},
+	volume = {vol. 4},
+	year = {2001}
+}
+
+@inproceedings{mitri2004fast,
+	title = {Fast color-independent ball detection for mobile robots},
+	author = {Mitri, Sara and Perv{\"o}lz, Kai and Surmann, Hartmut and N{\"u}chter, Andreas},
+	booktitle = {Proceedings of the IEEE Computer Society International Conference Mechatronics and Robotics},
+	pages = {900--905},
+	year = {2004}
+}
+
+@article{li2013survey,
+	title = {A Survey on Visual Perception for {RoboCup} {MSL} Soccer Robots},
+	author = {Li, Xun and Lu, Huimin and Xiong, Dan and Zhang, Hui and Zheng, Zhiqiang},
+	journal = {International Journal of Advanced Robotic Systems,},
+	volume = {vol. 10},
+	pages = {pp. 110--120},
+	year = {2013}
+}
+
+@article{treptow2004filter,
+	title = {Real-time object tracking for soccer-robots without color information},
+	author = {Andr{\'e} Treptow and Andreas Zell},
+	abstract = {Objects in the RoboCup scenario (soccer playing robots) are identified by their unique color. These visual cues will be removed in the near future so that new vision algorithms are needed to cope with this. In this paper we present a method for detecting and tracking the ball in a RoboCup scenario without the need for color information. We use Haar-like features trained by an adaboost algorithm to get a colorless representation of the ball. Tracking is performed by a particle filter. It is shown that our algorithm is able to track the ball in real-time with 25 fps even in a cluttered environment.},
+	doi = {http://dx.doi.org/10.1016/j.robot.2004.05.005},
+	issn = {0921-8890},
+	journal = {Robotics and Autonomous Systems},
+	keywords = {Robot soccer},
+	number = {1},
+	pages = {pp. 41--48},
+	volume = {vol. 48},
+	year = {2004},
+	publisher = {Elsevier}
+}
+
+@article{zhang2013novel,
+	title = {A Novel Generic Ball Recognition Algorithm Based on Omnidirectional Vision for Soccer Robots},
+	author = {Zhang, Hui and Lu, Huimin and Dong, Peng and Xiong, Dan and Zheng, Zhiqiang},
+	journal = {International Journal of Advanced Robotic Systems,},
+	publisher = {Intech-open access publisher Janeza Trdine 9, Rijeka, 51000, Croatia},
+	volume = {vol. 10, article 388},
+	year = {2013}
+}
+
+@inproceedings{Lienhart2002extended,
+	title = {An extended set of Haar-like features for rapid object detection},
+	author = {Lienhart, Rainer and Maydt, Jochen},
+	abstract = {Recently Viola et al. [2001] have introduced a rapid object detection. scheme based on a boosted cascade of simple feature classifiers. In this paper we introduce a novel set of rotated Haar-like features. These novel features significantly enrich the simple features of Viola et al. and can also be calculated efficiently. With these new rotated features our sample face detector shows off on average a 10% lower false alarm rate at a given hit rate. We also present a novel post optimization procedure for a given boosted cascade improving on average the false alarm rate further by 12.5%.},
+	booktitle = {International Conference on Image Processing, 2002},
+	doi = {10.1109/ICIP.2002.1038171},
+	issn = {1522-4880},
+	keywords = {Haar transforms;face recognition;feature extraction;image classification;object detection;Haar-like features;boosted cascade;false alarm rate;feature classifiers;hit rate;multi-stage classification;post optimization procedure;rapid object detection;sample face detector;Chromium;Detectors;Face detection;Humans;Object detection;Prototypes;Table lookup;Testing},
+	pages = {900--903},
+	volume = {1},
+	year = {2002},
+	organization = {IEEE}
+}
+
+@inproceedings{zhu2006hogs,
+	title = {Fast Human Detection Using a Cascade of Histograms of Oriented Gradients},
+	author = {Qiang Zhu and Yeh, M.-C. and Kwang-Ting Cheng and Avidan, S.},
+	abstract = {We integrate the cascade-of-rejectors approach with the Histograms of Oriented Gradients (HoG) features to achieve a fast and accurate human detection system. The features used in our system are HoGs of variable-size blocks that capture salient features of humans automatically. Using AdaBoost for feature selection, we identify the appropriate set of blocks, from a large set of possible blocks. In our system, we use the integral image representation and a rejection cascade which significantly speed up the computation. For a 320 × 280 image, the system can process 5 to 30 frames per second depending on the density in which we scan the image, while maintaining an accuracy level similar to existing methods.},
+	booktitle = {Procceedings of the IEEE Computer Society Conference on Computer Vision and Pattern Recognition (CVPR), 2006},
+	doi = {10.1109/CVPR.2006.119},
+	issn = {1063-6919},
+	keywords = {Assembly;Clothing;Face detection;Histograms;Humans;Image representation;Laboratories;Object detection;Support vector machine classification;Support vector machines},
+	pages = {1491--1498},
+	volume = {2},
+	year = {2006},
+	organization = {IEEE}
+}
+
+@inproceedings{rublee2011orb,
+	title = {ORB: An efficient alternative to SIFT or SURF},
+	author = {Rublee, E. and Rabaud, V. and Konolige, K. and Bradski, G.},
+	abstract = {Feature matching is at the base of many computer vision problems, such as object recognition or structure from motion. Current methods rely on costly descriptors for detection and matching. In this paper, we propose a very fast binary descriptor based on BRIEF, called ORB, which is rotation invariant and resistant to noise. We demonstrate through experiments how ORB is at two orders of magnitude faster than SIFT, while performing as well in many situations. The efficiency is tested on several real-world applications, including object detection and patch-tracking on a smart phone.},
+	booktitle = {Procceedings of the IEEE Computer Society International Conference on Computer Vision (ICCV), 2011},
+	doi = {10.1109/ICCV.2011.6126544},
+	issn = {1550-5499},
+	keywords = {computer vision;image matching;object detection;object recognition;tracking;transforms;BRIEF;ORB;SIFT;SURF;binary descriptor;computer vision;feature matching;noise resistance;object detection;object recognition;patch-tracking;smart phone;Boats},
+	month = {November},
+	pages = {2564--2571},
+	year = {2011},
+	organization = {IEEE}
+}
+
+@misc{wilson2015pbr,
+	title = {PBR In Practice},
+	author = {Joe Wilson},
+	year = {2015},
+	howpublished = {\url{http://www.marmoset.co/toolbag/learn/pbr-practice}},
+	note = {Last accessed on Mar 25, 2015}
+}
+
+@inproceedings{KitanoAKNO97,
+	title = {RoboCup: The Robot World Cup Initiative},
+	author = {Hiroaki Kitano and Minoru Asada and Yasuo Kuniyoshi and Itsuki Noda and Eiichi Osawa},
+	bibsource = {dblp computer science bibliography, http://dblp.org},
+	biburl = {http://dblp.uni-trier.de/rec/bib/conf/agents/KitanoAKNO97},
+	booktitle = {Agents},
+	pages = {340--347},
+	timestamp = {Mon, 09 Dec 2002 08:00:06 +0100},
+	year = {1997}
+}
+
+@inproceedings{dalal2005histograms,
+	title = {Histograms of oriented gradients for human detection},
+	author = {Dalal, Navneet and Triggs, Bill},
+	booktitle = {Procceedings of the IEEE Computer Society Conference on Computer Vision and Pattern Recognition (CVPR 2005)},
+	volume = {1},
+	pages = {886--893},
+	year = {2005},
+	organization = {IEEE}
+}
+
+@inproceedings{imagenet_cvpr09,
+    title = {{ImageNet: A Large-Scale Hierarchical Image Database}},
+    author = {Deng, J. and Dong, W. and Socher, R. and Li, L.-J. and Li, K. and Fei-Fei, L.},
+    booktitle = {Conference on Computer Vision and Pattern Recognition (CVPR 2009),},
+    year = {2009},
+    bibsource = "http://www.image-net.org/papers/imagenet_cvpr09.bib"
+}
+
+@book{fellbaum1998wordnet,
+    title = {WordNet: An Electronic Lexical Database},
+    author = {Christiane, Fellbaum},
+    year = {1998},
+    publisher = {Bradford Books},
+}
+
+@article{opencv_library,
+    title = {{OpenCV Library}},
+    author = {Bradski, G.},
+    citeulike-article-id = {2236121},
+    journal = {Dr. Dobb's Journal of Software Tools},
+    keywords = {bibtex-import},
+    posted-at = {2008-01-15 19:21:54},
+    priority = {4},
+    year = {2000}
+}
+
+@incollection{liao2007learning,
+	title = {Learning multi-scale block local binary patterns for face recognition},
+	author = {Liao, Shengcai and Zhu, Xiangxin and Lei, Zhen and Zhang, Lun and Li, Stan Z},
+	booktitle = {Advances in Biometrics},
+	pages = {828--837},
+	year = {2007},
+	publisher = {Springer}
+}
+
+@misc{annable2013nubots,
+	title = {The {NUbots} team description paper 2013, {RoboCup Humanoid League}},
+	author = {Annable, Brendan and Budden, David and Calland, Sophie and Chalup, Stephan K and Fenn, Shannon K and Flannery, Madison and Fountain, Jake and King, Robert AR and Mendes, Alexandre and Metcalfe, Mitchell},
+	year = {2013},
+	publisher = {RoboCup}
+}
+
+@inproceedings{gross2003image,
+	title = {An image preprocessing algorithm for illumination invariant face recognition},
+	author = {Gross, Ralph and Brajovic, Vladimir},
+	booktitle = {Audio-and Video-Based Biometric Person Authentication},
+	pages = {10--18},
+	year = {2003},
+	organization = {Springer}
+}
+
+@inproceedings{viola2001rapid,
+	title = {Rapid object detection using a boosted cascade of simple features},
+	author = {Viola, Paul and Jones, Michael},
+	booktitle = {Proceedings of the IEEE Computer Society Conference on Computer Vision and Pattern Recognition (CVPR 2001)},
+	volume = {1},
+	pages = {511--518},
+	year = {2001},
+	organization = {IEEE}
+}
