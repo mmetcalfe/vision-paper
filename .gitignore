@@ -1,3 +1,5 @@
 /.texpadtmp/
 *.pdf
 *.zip
+
+/code/trials/
