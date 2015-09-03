@@ -11,6 +11,7 @@ import subprocess
 import glob
 import sys
 import random
+from concurrent import futures
 
 if __name__ == "__main__":
     random.seed(123454321) # Use deterministic samples.
@@ -76,7 +77,6 @@ if __name__ == "__main__":
     	trainClassifier(classifier_yaml, output_dir)
 
     # TODO: Use GNU Parallel to run training of classifiers simultaneously.
-    from concurrent import futures
     with futures.ThreadPoolExecutor(max_workers=8) as executor:
         future_results = dict((executor.submit(doTraining, fname), fname) for fname in trial_files)
 
@@ -86,5 +86,21 @@ if __name__ == "__main__":
                 print '{} generated an exception: {}'.format(fname, future.exception())
             else:
                 print '{} completed training successfully'.format(fname)
+
+
+    # TODO: Scan output files for possible errors.
+    # (check for bad words: 'cannot', 'error', 'not', 'fail')
+
+    print '===== RUN CLASSIFIERS ====='
+    from train_classifier import runClassifier
+
+    # TODO: Parallelise this code.
+    for trial_yaml in trial_files:
+        # Read classifier training file:
+        classifier_yaml = loadYamlFile(trial_yaml)
+        output_dir = trial_yaml.split('.yaml')[0]
+
+        runClassifier(classifier_yaml, output_dir)
+
 
     print '===== COLLECT RESULTS ====='

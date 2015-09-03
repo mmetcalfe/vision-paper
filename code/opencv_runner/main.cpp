@@ -11,6 +11,7 @@ int main(int argc, char** argv) {
 	std::string detections_file = "images/tests/detections.dat";
 	std::string input_dir = "images/tests";
 	std::string output_dir = "images/tests/processed";
+	bool save_images = true;
 	if (argc >= 2) {
 		classifier_file = argv[1];
 	}
@@ -23,6 +24,9 @@ int main(int argc, char** argv) {
 	if (argc >= 5){
 		output_dir = argv[4];
 	}
+	if (argc >= 6){
+		save_images = strncmp(argv[5], "true", 4) == 0;
+	}
 
 	// Truncate the detections file:
 	std::ofstream fs(detections_file, std::ios::out | std::ios::trunc);
@@ -34,7 +38,7 @@ int main(int argc, char** argv) {
 	std::cout << "output_dir: " << output_dir << std::endl;
 
 	Adaboost adaboost;
-	adaboost.readDirectory(input_dir, output_dir, detections_file, classifier_file);
+	adaboost.readDirectory(input_dir, output_dir, detections_file, classifier_file, save_images);
 
 	return 0;
 }

@@ -13,27 +13,37 @@
 #      - Specify all paths from the code directory.
 #      - Quote all numbers.
 
+# maxImageCountDiff: [644, 2532, 2132] # pos, neg, bak
+
 dataset:
     description:
-        number: { paramSet: ['10', '20', '30'] } # Total number of samples.
-        posFrac: { paramSet: ['0.33', '0.5', '0.66'] } # Fraction of samples that will be positive.
-        hardNegFrac: { paramSet: ['0.0', '0.25', '0.5'] } # Fraction of *negative* samples that will be hard negatives.
+        number: { paramSet: ['1000', '2000', '3000', '4000'] } # Total number of samples.
+        posFrac: { paramSet: ['0.25', '0.5', '0.75'] } # Fraction of samples that will be positive.
+        hardNegFrac: { paramSet: ['0.00', '0.25', '0.5'] } # Fraction of *negative* samples that will be hard negatives.
         synsets: # Sample from only these synsets (use '.*' for all).
             pos:
-                # - '.*'
-                - n02799071 # baseball
+                - '.*'
+                # - n02799071 # baseball
                 # - n02802426 # basketball
                 # - n02882301 # ten-pin bowling
-                - n03134739 # croquet
-                - n03145719 # pool
+                # - n03134739 # croquet
+                # - n03145719 # pool
                 # - n03267113 # 8-ball
                 # - n03721047 # marbles
                 # - n03742019 # exercise ball
-                - n03825442 # bowling (mostly ten-pin)
-                - n03942813 # table tennis
-                - n03982232 # pool (again)
+                # - n03825442 # bowling (mostly ten-pin)
+                # - n03942813 # table tennis
+                # - n03982232 # pool (again)
                 # - n04409515 # tennis
                 # - n04540053 # volleyball
+                #
+                # - n02778669 # ball
+                # - n02779435 # ball
+                # - n02839351 # billiard ball
+                # - n02778669 # generic sporting equipment balls golf ball
+                # - n03445777 # golf ball
+                # - n02779435 # plaything, toy, ball
+                # - n04254680 # soccer ball
             neg:
                 - '.*'
     directory: # Directories from which to draw the different image types.
@@ -45,7 +55,7 @@ training:
         data: classifiers
         numStages: '3' # <number_of_stages = 20>]
     cascade:
-        featureType: HAAR # {HAAR(default), LBP, HOG}
+        featureType: { paramSet: [HAAR, LBP, HOG] } # {HAAR(default), LBP, HOG}
     boost:
         minHitRate: '0.99' # 0.995
         maxFalseAlarmRate: '0.5' # 0.5
@@ -54,7 +64,7 @@ training:
         maxWeakCount: '100' # 100
 
         # TODO: Consider just using numPos instead of skipFrac.
-        skipFrac: { paramSet: ['0.25', '0.5', '0.75'] } # http://answers.opencv.org/question/4368/
+        skipFrac: { paramSet: ['0.1'] } # http://answers.opencv.org/question/4368/
                         # While the selection, some new positive samples from
                         # vec-file can be recognized as background right away
                         # by the current cascade and we skip such samples. The

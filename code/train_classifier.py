@@ -123,16 +123,6 @@ def preprocessTrial(classifier_yaml, output_dir):
 			dat_file.write("\n{}{}".format(info_entry_prefix, img.strip('../')))
 		dat_file.flush()
 
-	# print '\n## Creating samples...'
-	# balls_vec_fname = '{}/balls.vec'.format(output_dir)
-	#
-	# samplesCommand = [ 'opencv_createsamples'
-	# 	, '-info', pos_info_fname
-	# 	, '-vec',  balls_vec_fname
-	# 	, '-num',  str(numPos)
-	# 	]
-	# subprocess.call(samplesCommand, cwd='.')
-
 def createSamples(classifier_yaml, output_dir):
 	numPos, _, _ = requiredImageCounts(classifier_yaml)
 
@@ -144,16 +134,19 @@ def createSamples(classifier_yaml, output_dir):
 		, '-vec',  balls_vec_fname
 		, '-num',  str(numPos)
 		]
-	subprocess.call(samplesCommand, cwd='.')
+	cmd_ouptut = subprocess.check_output(samplesCommand, stderr=subprocess.STDOUT, cwd='.')
+	with open('{}/output_create_samples.txt'.format(output_dir), 'w') as cmd_output_file:
+		cmd_output_file.write(cmd_ouptut)
+		cmd_output_file.flush()
 
 # trainClassifier :: Tree String -> String -> IO ()
 def trainClassifier(classifier_yaml, output_dir):
 	traincascade_data_dir = '{}/data'.format(output_dir)
 	if not os.path.isdir(traincascade_data_dir):
-		print '\n## Creating training data directory: {}'.format(traincascade_data_dir)
+		print '## Creating training data directory: {}'.format(traincascade_data_dir)
 		os.makedirs(traincascade_data_dir)
 	else:
-		print '\n## Using existing training data directory: {}'.format(traincascade_data_dir)
+		print '## Using existing training data directory: {}'.format(traincascade_data_dir)
 
 	numPos, numNeg, numBak = requiredImageCounts(classifier_yaml)
 	balls_vec_fname = '{}/balls.vec'.format(output_dir)
@@ -179,8 +172,8 @@ def trainClassifier(classifier_yaml, output_dir):
 	numPosTraining = int((numPos - skippedSamples) / (1 + (1 - minHitRate) * (numStages - 1)))
 	# numPosTraining = int((numPos - skippedSamples) / (1 + (1 - minHitRate)**(numStages - 1))) # ??
 	numNegTraining = (numNeg + numBak)
-	print '## numPosTraining:', numPosTraining
-	samplesCommand = [ 'opencv_traincascade'
+
+	trainingCommand = [ 'opencv_traincascade'
 		, '-vec',               balls_vec_fname.split('/')[-1]
 		, '-data',              'data'
 		, '-bg',                neg_info_fname.split('/')[-1]
@@ -194,8 +187,38 @@ def trainClassifier(classifier_yaml, output_dir):
 		, '-maxDepth',          classifier_yaml['training']['boost']['maxDepth']
 		, '-maxWeakCount',      classifier_yaml['training']['boost']['maxWeakCount']
 		]
-	subprocess.call(samplesCommand, cwd='{}'.format(output_dir))
 
+	# TODO: Pipe ouptut to file, since this is a long running process.
+	cmd_ouptut = subprocess.check_output(trainingCommand, stderr=subprocess.STDOUT, cwd='{}'.format(output_dir))
+	with open('{}/output_training.txt'.format(output_dir), 'w') as cmd_output_file:
+		cmd_output_file.write(cmd_ouptut)
+		cmd_output_file.flush()
+
+# runClassifier :: Tree String -> String -> IO ()
+def runClassifier(classifier_yaml, output_dir):
+	traincascade_data_dir = '{}/data'.format(output_dir)
+
+	detections_fname = '{}/detections.dat'.format(output_dir)
+
+	results_dir = '{}/results'.format(output_dir)
+	results_dir_relative = '{}'.format(results_dir)
+	if not os.path.isdir(results_dir_relative):
+		print '\n## Creating results directory: {}'.format(results_dir_relative)
+		os.makedirs(results_dir_relative)
+	else:
+		print '\n## Using existing results directory: {}'.format(results_dir_relative)
+
+	runCommand = [ './opencv_runner/build/opencv_runner'
+		, traincascade_data_dir + '/cascade.xml'
+		, detections_fname
+		, classifier_yaml['testing']['inputDir']
+		, results_dir
+		, 'false' # Do not save result images
+		]
+	cmd_ouptut = subprocess.check_output(runCommand, stderr=subprocess.STDOUT, cwd='.')
+	with open('{}/output_run.txt'.format(output_dir), 'w') as cmd_output_file:
+		cmd_output_file.write(cmd_ouptut)
+		cmd_output_file.flush()
 
 
 if __name__ == "__main__":
@@ -221,26 +244,8 @@ if __name__ == "__main__":
 	trainClassifier(classifier_yaml, output_dir)
 
 	print '\n## Running classifier...'
-	traincascade_data_dir = '{}/data'.format(output_dir)
 
-	detections_fname = '{}/detections.dat'.format(output_dir)
-
-	results_dir = '{}/results'.format(output_dir)
-	results_dir_relative = '{}'.format(results_dir)
-	if not os.path.isdir(results_dir_relative):
-		print '\n## Creating results directory: {}'.format(results_dir_relative)
-		os.makedirs(results_dir_relative)
-	else:
-		print '\n## Using existing results directory: {}'.format(results_dir_relative)
-
-	runCommand = [ './opencv_runner/build/opencv_runner'
-		, traincascade_data_dir + '/cascade.xml'
-		, detections_fname
-		, classifier_yaml['testing']['inputDir']
-		, results_dir
-		]
-	subprocess.call(runCommand, cwd='.')
-
+	runClassifier(classifier_yaml, output_dir)
 
 	# print '\n## Calculating statistics...'
 	#
