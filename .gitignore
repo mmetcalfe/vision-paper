@@ -3,3 +3,8 @@
 *.zip
 
 /code/trials/
+/code/samples/
+
+/code/opencv_runner/build/
+
+*.pyc

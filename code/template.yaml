@@ -1,9 +1,21 @@
-# Note: Specify all paths from the code directory.
-# Note: Quote all numbers.
+#
+# template.yaml
+#
+#    This file specifies the set of classifiers to train, and evaluate.
+#    It is to be used as the input file for 'perform_experiments.py', or
+#    'generate_trials.py'.
+#    Any parameter may be given a set of alternate values by replacing its value
+#    with a dictionary with the single key 'paramSet' whose value is an array of
+#    alternate values.
+#    A trial will be generated for every possible combination of alternate values.
+#
+#    Notes:
+#      - Specify all paths from the code directory.
+#      - Quote all numbers.
 
 dataset:
     description:
-        number: { paramSet: ['2000', '3000', '4000'] } # Total number of samples.
+        number: { paramSet: ['10', '20', '30'] } # Total number of samples.
         posFrac: { paramSet: ['0.33', '0.5', '0.66'] } # Fraction of samples that will be positive.
         hardNegFrac: { paramSet: ['0.0', '0.25', '0.5'] } # Fraction of *negative* samples that will be hard negatives.
         synsets: # Sample from only these synsets (use '.*' for all).
@@ -25,13 +37,13 @@ dataset:
             neg:
                 - '.*'
     directory: # Directories from which to draw the different image types.
-        positive: images/samples/positive
-        background: images/samples/background
-        negative: images/samples/hard_negative
+        positive: samples/positive
+        background: samples/background
+        negative: samples/hard_negative
 training:
     basic:
         data: classifiers
-        numStages: '20' # <number_of_stages = 20>]
+        numStages: '3' # <number_of_stages = 20>]
     cascade:
         featureType: HAAR # {HAAR(default), LBP, HOG}
     boost:
@@ -40,7 +52,9 @@ training:
         weightTrimRate: '0.95' # 0.95
         maxDepth: '1' # 1
         maxWeakCount: '100' # 100
-        skipFrac: '0.75' # http://answers.opencv.org/question/4368/
+
+        # TODO: Consider just using numPos instead of skipFrac.
+        skipFrac: { paramSet: ['0.25', '0.5', '0.75'] } # http://answers.opencv.org/question/4368/
                         # While the selection, some new positive samples from
                         # vec-file can be recognized as background right away
                         # by the current cascade and we skip such samples. The
@@ -52,4 +66,4 @@ training:
     haarFeature:
         mode: ALL # Use extended Haar features
 testing:
-    inputDir: images/samples/positive_test_set/
+    inputDir: samples/positive_test_set/
