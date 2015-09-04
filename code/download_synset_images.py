@@ -96,7 +96,13 @@ with futures.ThreadPoolExecutor(max_workers=8) as executor:
 	# Build set of futures:
 	future_results = {}
 	for search_word in search_words:
-		future_results[search_word] = executor.submit(downloadImagesForSearchWord, search_word)
+		# Ignore search words that are known to have bounding box data:
+		if search_word in ['n03208556', 'n04019541']:
+			print 'WARNING: Skipping search word "{}", as it is known to have bounding box data.'.format(search_word)
+			continue
+
+		future = executor.submit(downloadImagesForSearchWord, search_word)
+		future_results[future] = search_word
 
 	for future in futures.as_completed(future_results):
 		search_word = future_results[future]

@@ -6,5 +6,6 @@
 /code/samples/
 
 /code/opencv_runner/build/
+/code/circle_detector/build/
 
 *.pyc
