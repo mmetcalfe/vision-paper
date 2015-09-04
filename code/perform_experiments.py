@@ -123,8 +123,8 @@ if __name__ == "__main__":
 
     # Split neg_images into 8 parts:
     numThreads = 8
-    neg_img_lists = [[]] * numThreads
-    for i in range(neg_images):
+    neg_img_lists = [[] for i in range(numThreads)]
+    for i in range(len(neg_images)):
         k = i % numThreads
         neg_img_lists[k] += [neg_images[i]]
 
@@ -133,7 +133,7 @@ if __name__ == "__main__":
         for img in img_list:
             findEllipsesInImage(img, bbfn)
 
-    with futures.ThreadPoolExecutor(max_workers=8) as executor:
+    with futures.ThreadPoolExecutor(max_workers=numThreads) as executor:
     	# Build set of futures:
     	future_results = {}
     	for img_list in neg_img_lists:
