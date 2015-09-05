@@ -1,5 +1,6 @@
 from PIL import Image
 import os.path
+import re
 import argparse
 
 def extractObjectWindows(info_dat, size, output_folder):
@@ -15,6 +16,10 @@ def extractObjectWindows(info_dat, size, output_folder):
 	print len(info)
 
 	for image_path, details in info.iteritems():
+		if re.compile('.*n13874073.*').match(image_path):
+			print 'Image {} is from a blacklisted synset.'.format(image_path)
+			continue
+
 		if not os.path.isfile(image_path):
 			print 'The path {} does not exist'.format(image_path)
 		else:
@@ -48,7 +53,7 @@ def extractObjectWindows(info_dat, size, output_folder):
 
 					im_crop = im.crop((l, t, r, b))
 					im_crop = im_crop.resize(size, Image.ANTIALIAS)
-					out_name = '{}_{}'.format(out_path, i)
+					out_name = '{}_{}.jpg'.format(out_path.strip('.jpg'), i)
 
 					# print '  saving:', out_name
 					im_crop.save(out_name, 'jpeg')

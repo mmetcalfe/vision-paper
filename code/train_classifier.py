@@ -17,7 +17,7 @@ class TooFewImagesError(Exception):
 	def __str__(self):
 		return 'TooFewImagesError: ({} < {})'.format(repr(self.presentCounts), repr(self.requiredCounts))
 
-# loadGlobalInfo :: String -> IO (Tree String)
+# loadYamlFile :: String -> IO (Tree String)
 def loadYamlFile(fname):
 	if not os.path.isfile(fname):
 		raise ValueError('Input file \'{}\' does not exist!'.format(fname))
@@ -27,14 +27,16 @@ def loadYamlFile(fname):
 	return data
 
 # loadGlobalInfo :: String -> Map String String
-def loadGlobalInfo(global_info_fname):
+def loadGlobalInfo():
 	global_info = {}
-	with open(global_info_fname, 'r') as dat_file:
-		for line in dat_file.readlines():
-			parts = line.strip().partition(' ')
-			image_path = parts[0].split('/')[-1]
-			details = parts[2]
-			global_info[image_path] = details
+	cache_files = glob.glob("bbinfo/{}__*.dat".format('*'))
+	for cache_file_name in cache_files:
+		with open(cache_file_name, 'r') as dat_file:
+			for line in dat_file.readlines():
+				parts = line.strip().partition(' ')
+				image_path = parts[0].split('/')[-1]
+				details = parts[2]
+				global_info[image_path] = details
 	return global_info
 
 # requiredImageCounts :: Tree String -> (Int, Int, Int)
@@ -90,8 +92,8 @@ def preprocessTrial(classifier_yaml, output_dir):
 		print '## Using existing output directory: {}'.format(output_dir)
 
 	# Load the global info file with bounding boxes for all positive images:
-	global_info_fname = 'info.dat'
-	global_info = loadGlobalInfo(global_info_fname)
+	# global_info_fname = 'info.dat'
+	global_info = loadGlobalInfo()
 
 	pos_info_fname = '{}/positive.txt'.format(output_dir)
 	neg_info_fname = '{}/negative.txt'.format(output_dir)
