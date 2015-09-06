@@ -1,3 +1,12 @@
-- n02778669 # generic sporting equipment balls
-- n02779435 # plaything/toy/ball
-- n03445777 # golf balls
+# Blacklisted words:
+#  - n04023962: punching bags
+#  - n04118538: footballs
+#  - n04186051: shaving foam?
+#  - n09229709: soap bubbles (often not spherical)
+
+- n02778669 # Ball (1244, and subcategories) -- Round object that is hit or thrown or kicked in games; "the ball travelled 90 mph on his serve"; "the mayor threw out the first ball"; "the ball rolled into the corner pocket"
+- n02779435 # Ball (1469) -- A spherical object used as a plaything; "he played with his rubber ball in the bathtub"
+- n03445777 # Golf ball (1181) -- A small hard ball used in playing golf; dimpled to reduce wind resistance
+- n13899404 # Ball, globe, orb (0, and subcategories) -- An object with a spherical shape; "a ball of fire"
+- n03131967 # Cricket ball (1047) -- The ball used in playing cricket
+- n02799071 # Baseball (974) -- A ball used in playing baseball

@@ -120,60 +120,60 @@ if __name__ == "__main__":
 	parser.add_argument('output_dir', type=str, nargs='?', default='trials', help='Directory in which to output the generated trials.')
 	args = parser.parse_args()
 
-	print '===== PREPROCESS NEGATIVE IMAGES ====='
-	print '	Create hard negative images by detecting ellipses in negative\n	images, then cropping them to thumbnails.'
-
-	# bbox_file_name = 'samples/negative_unlabelled_info.dat'
-	neg_image_dir = 'samples/negative_unlabelled'
-	all_neg_images = glob.glob("{}/n*_*.*".format(neg_image_dir))
-	filter_pgm_prog = re.compile('{}/n\d*_\d*\.(pgm|svg)'.format(neg_image_dir))
-	filter_ext_prog = re.compile('{}/n\d*_\d*\.jpg'.format(neg_image_dir))
-	neg_images = filter(lambda x: filter_ext_prog.match(x) and not filter_pgm_prog.match(x), all_neg_images)
-	# for img in neg_images:
-	#	 findEllipsesInImage(img, bbox_file_name)
-
-	# Load cache:
-	bbinfo_cache = loadBbinfo('negative_unlabelled_info')
-
-	# Split neg_images into 8 parts:
-	numThreads = 8
-	neg_img_lists = [[] for i in range(numThreads)]
-	for i in range(len(neg_images)):
-		k = i % numThreads
-		neg_img_lists[k] += [neg_images[i]]
-
-	def findEllipsesThread(img_list):
-		bbfn = 'bbinfo/negative_unlabelled_info__{}.dat'.format(random.randint(1000, 9999))
-		for img in img_list:
-			if img in bbinfo_cache:
-				print 'Skipping cached image: {}.'.format(img)
-				continue
-			findEllipsesInImage(img, bbfn)
-
-	# with futures.ThreadPoolExecutor(max_workers=numThreads) as executor:
-	# 	# Build set of futures:
-	# 	future_results = {}
-	# 	for img_list in neg_img_lists:
-	# 		future = executor.submit(findEllipsesThread, img_list)
-	# 		# future_results[future] = img_list
+	# print '===== PREPROCESS NEGATIVE IMAGES ====='
+	# print '	Create hard negative images by detecting ellipses in negative\n	images, then cropping them to thumbnails.'
 	#
-	# 	for future in futures.as_completed(future_results):
-	# 		# search_word = future_results[future]
-	# 		if future.exception() is not None:
-	# 			print 'AN EXCEPTION OCCURRED: {}'.format(future.exception())
-	# 		else:
-	# 			print 'ELLIPSES FOR LIST CHUNK COMPLETE.'
-
+	# # bbox_file_name = 'samples/negative_unlabelled_info.dat'
+	# neg_image_dir = 'samples/negative_unlabelled'
+	# all_neg_images = glob.glob("{}/n*_*.*".format(neg_image_dir))
+	# filter_pgm_prog = re.compile('{}/n\d*_\d*\.(pgm|svg)'.format(neg_image_dir))
+	# filter_ext_prog = re.compile('{}/n\d*_\d*\.jpg'.format(neg_image_dir))
+	# neg_images = filter(lambda x: filter_ext_prog.match(x) and not filter_pgm_prog.match(x), all_neg_images)
+	# # for img in neg_images:
+	# #	 findEllipsesInImage(img, bbox_file_name)
 	#
-	# # Use the bounding box data file to save cropped thumbnails of all ellipses:
-	# from extract_object_windows import extractObjectWindows
-	# for info_file in glob.glob('bbinfo/negative_unlabelled_info__*.dat'):
-	# 	print 'Processing info file:', info_file
-	# 	extractObjectWindows(info_file, (24, 24), 'samples/hard_negative')
-	# for info_file in glob.glob('bbinfo/info_dwsi__*.dat'):
-	# 	print 'Processing info file:', info_file
-	# 	extractObjectWindows(info_file, (24, 24), 'samples/hard_negative')
-
+	# # Load cache:
+	# bbinfo_cache = loadBbinfo('negative_unlabelled_info')
+	#
+	# # Split neg_images into 8 parts:
+	# numThreads = 8
+	# neg_img_lists = [[] for i in range(numThreads)]
+	# for i in range(len(neg_images)):
+	# 	k = i % numThreads
+	# 	neg_img_lists[k] += [neg_images[i]]
+	#
+	# def findEllipsesThread(img_list):
+	# 	bbfn = 'bbinfo/negative_unlabelled_info__{}.dat'.format(random.randint(1000, 9999))
+	# 	for img in img_list:
+	# 		if img in bbinfo_cache:
+	# 			print 'Skipping cached image: {}.'.format(img)
+	# 			continue
+	# 		findEllipsesInImage(img, bbfn)
+	#
+	# # with futures.ThreadPoolExecutor(max_workers=numThreads) as executor:
+	# # 	# Build set of futures:
+	# # 	future_results = {}
+	# # 	for img_list in neg_img_lists:
+	# # 		future = executor.submit(findEllipsesThread, img_list)
+	# # 		# future_results[future] = img_list
+	# #
+	# # 	for future in futures.as_completed(future_results):
+	# # 		# search_word = future_results[future]
+	# # 		if future.exception() is not None:
+	# # 			print 'AN EXCEPTION OCCURRED: {}'.format(future.exception())
+	# # 		else:
+	# # 			print 'ELLIPSES FOR LIST CHUNK COMPLETE.'
+	#
+	# #
+	# # # Use the bounding box data file to save cropped thumbnails of all ellipses:
+	# # from extract_object_windows import extractObjectWindows
+	# # for info_file in glob.glob('bbinfo/negative_unlabelled_info__*.dat'):
+	# # 	print 'Processing info file:', info_file
+	# # 	extractObjectWindows(info_file, (24, 24), 'samples/hard_negative')
+	# # for info_file in glob.glob('bbinfo/info_dwsi__*.dat'):
+	# # 	print 'Processing info file:', info_file
+	# # 	extractObjectWindows(info_file, (24, 24), 'samples/hard_negative')
+	#
 
 	print '===== GENERATE TRIALS ====='
 	from generate_trials import generateTrials
@@ -189,6 +189,7 @@ if __name__ == "__main__":
 
 	trial_files = glob.glob("{}/*.yaml".format(args.output_dir))
 	for trial_yaml in trial_files:
+		print '    Creating samples for: {}'.format(trial_yaml)
 		# Read classifier training file:
 		classifier_yaml = loadYamlFile(trial_yaml)
 		output_dir = trial_yaml.split('.yaml')[0]

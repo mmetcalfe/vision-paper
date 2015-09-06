@@ -12,8 +12,8 @@ from concurrent import futures
 import glob
 
 parser = argparse.ArgumentParser(description='ImageNet Gatherer')
-parser.add_argument('image_folder', type=str, nargs='?', default='images', help='The folder to store the downloaded images')
-parser.add_argument('info_dat', type=str, nargs='?', default='info.dat', help='The filepath to store the boundingbox information')
+parser.add_argument('image_folder', type=str, nargs='?', default='samples/positive', help='The folder to store the downloaded images')
+parser.add_argument('info_dat_prefix', type=str, nargs='?', default='positive_info_dwsi', help='Prefix of boundingbox information files')
 parser.add_argument('words_file', type=str, nargs='?', default='parent_words.yaml', help='The file from which to load the parent words')
 
 args = parser.parse_args()
@@ -28,6 +28,17 @@ def loadCache(cache_name):
 			words = map(lambda l: l.strip(), cache_file.readlines())
 			for word in words:
 				cache[word] = 0
+	return cache
+
+def loadBbinfo(cache_name):
+	cache = {}
+	cache_files = glob.glob("bbinfo/{}__*.dat".format(cache_name))
+	for cache_file_name in cache_files:
+		with open(cache_file_name, 'r+') as cache_file:
+			infoLines = map(lambda l: l.strip(), cache_file.readlines())
+			for bbinfo in infoLines:
+				lst = bbinfo.split(' ')
+				cache[lst[0]] = ' '.join(lst[1:])
 	return cache
 
 print 'LOADING BAD IMAGE CACHE:'
@@ -49,6 +60,18 @@ def addToBadSearchWordCache(wordnet_name):
 	with open(bad_search_word_cache_file, 'a+') as cache:
 		cache.write("{}\n".format(wordnet_name))
 
+
+print 'LOADING BOUNDING BOX CACHE:'
+# cached_bbox = {}
+# output_dat_filename = args.info_dat
+# with open(output_dat_filename, 'r') as dat_file:
+# 	for line in dat_file.readlines():
+# 		image_path = line.strip().partition(' ')[0]
+# 		cached_bbox[image_path] = True
+cached_bbox = loadBbinfo(args.info_dat_prefix)
+print '  size: {}'.format(len(cached_bbox))
+
+
 blacklisted_images_sha1_hashes = [
 	'10f3f7f79e6528aa9d828316248997568ac0d833'  # flickr 'photo not available' image
 ]
@@ -58,6 +81,7 @@ blacklisted_search_words = [
 	'n04023962'  # punching bags
 ]
 
+# LOAD THE PARENT WORDS:
 # file = open('parent_words.yaml', 'r')
 file = open(args.words_file, 'r')
 parent_words = yaml.load(file)
@@ -70,18 +94,12 @@ for parent_word in parent_words:
 	print '  {}'.format(parent_word)
 	hyponym_data_url = urllib2.urlopen('http://www.image-net.org/api/text/wordnet.structure.hyponym?wnid={}&full=1'.format(parent_word))
 	for child_word in hyponym_data_url.readlines()[1:]:  # ignore first line as its the 'parent word'
+		print '      {}'.format(child_word[1:].strip())
 		search_words.append(child_word[1:].strip())  # ignore proceeding dash and strip trailing newline
 
+print 'search words: ', search_words
+
 url_map = {}
-
-cached_bbox = {}
-
-output_dat_filename = args.info_dat
-with open(output_dat_filename, 'r') as dat_file:
-	for line in dat_file.readlines():
-		image_path = line.strip().partition(' ')[0]
-		cached_bbox[image_path] = True
-
 
 def downloadImagesForSearchWord(search_word):
 	print 'BEGIN SEARCH WORD: {}'.format(search_word)
@@ -113,7 +131,7 @@ def downloadImagesForSearchWord(search_word):
 		with open(bad_image_cache_file, 'a+') as cache:
 			cache.write("{}\n".format(wordnet_name))
 
-	output_dat_filename = 'bbinfo/info_dwsi__{}.dat'.format(random.randint(1000, 9999))
+	output_dat_filename = 'bbinfo/{}__{}.dat'.format(args.info_dat_prefix, random.randint(1000, 9999))
 	with open(output_dat_filename, 'a+') as dat_file:
 		with tarfile.open(fileobj=bounding_boxes_url_data, mode='r|*') as bounding_boxes_file:
 			for fileinfo in bounding_boxes_file:
@@ -186,7 +204,7 @@ def downloadImagesForSearchWord(search_word):
 					cached_bbox[output_image_filename] = True
 
 
-with futures.ThreadPoolExecutor(max_workers=8) as executor:
+with futures.ThreadPoolExecutor(max_workers=48) as executor:
 	# Build set of futures:
 	future_results = {}
 	for search_word in search_words:
