@@ -189,7 +189,7 @@ if __name__ == "__main__":
 
 	trial_files = glob.glob("{}/*.yaml".format(args.output_dir))
 	for trial_yaml in trial_files:
-		print '    Creating samples for: {}'.format(trial_yaml)
+		print '    Preprocessing: {}'.format(trial_yaml)
 		# Read classifier training file:
 		classifier_yaml = loadYamlFile(trial_yaml)
 		output_dir = trial_yaml.split('.yaml')[0]
@@ -213,14 +213,13 @@ if __name__ == "__main__":
 	from train_classifier import createSamples
 
 	for trial_yaml in trial_files:
+		print '    Creating samples for: {}'.format(trial_yaml)
+
 		# Read classifier training file:
 		classifier_yaml = loadYamlFile(trial_yaml)
 		output_dir = trial_yaml.split('.yaml')[0]
 
 		createSamples(classifier_yaml, output_dir)
-
-
-	sys.exit(0)
 
 
 	print '===== TRAIN CLASSIFIERS ====='
@@ -232,7 +231,6 @@ if __name__ == "__main__":
 		output_dir = fname.split('.yaml')[0]
 		trainClassifier(classifier_yaml, output_dir)
 
-	# TODO: Use GNU Parallel to run training of classifiers simultaneously.
 	with futures.ThreadPoolExecutor(max_workers=8) as executor:
 		future_results = dict((executor.submit(doTraining, fname), fname) for fname in trial_files)
 
@@ -250,13 +248,29 @@ if __name__ == "__main__":
 	print '===== RUN CLASSIFIERS ====='
 	from train_classifier import runClassifier
 
-	# TODO: Parallelise this code.
-	for trial_yaml in trial_files:
-		# Read classifier training file:
-		classifier_yaml = loadYamlFile(trial_yaml)
-		output_dir = trial_yaml.split('.yaml')[0]
+	# # TODO: Parallelise this code.
+	# for trial_yaml in trial_files:
+	# 	# Read classifier training file:
+	# 	classifier_yaml = loadYamlFile(trial_yaml)
+	# 	output_dir = trial_yaml.split('.yaml')[0]
+	#
+	# 	runClassifier(classifier_yaml, output_dir)
 
-		runClassifier(classifier_yaml, output_dir)
+def doRunning(fname):
+	# Read classifier training file:
+	classifier_yaml = loadYamlFile(trial_yaml)
+	output_dir = trial_yaml.split('.yaml')[0]
+	runClassifier(classifier_yaml, output_dir)
+
+with futures.ThreadPoolExecutor(max_workers=8) as executor:
+	future_results = dict((executor.submit(doRunning, fname), fname) for fname in trial_files)
+
+	for future in futures.as_completed(future_results):
+		fname = future_results[future]
+		if future.exception() is not None:
+			print '{} generated an exception: {}'.format(fname, future.exception())
+		else:
+			print '{} completed running successfully'.format(fname)
 
 
 	print '===== COLLECT RESULTS ====='

@@ -9,6 +9,7 @@ import subprocess
 import glob
 import random
 import re
+import sys
 
 class TooFewImagesError(Exception):
 	def __init__(self, presentCounts, requiredCounts):
@@ -136,10 +137,17 @@ def createSamples(classifier_yaml, output_dir):
 		, '-vec',  balls_vec_fname
 		, '-num',  str(numPos)
 		]
-	cmd_ouptut = subprocess.check_output(samplesCommand, stderr=subprocess.STDOUT, cwd='.')
-	with open('{}/output_create_samples.txt'.format(output_dir), 'w') as cmd_output_file:
-		cmd_output_file.write(cmd_ouptut)
-		cmd_output_file.flush()
+
+	try:
+		with open('{}/output_create_samples.txt'.format(output_dir), 'w') as cmd_output_file:
+			cmd_ouptut = subprocess.check_call(samplesCommand, stdout=cmd_output_file, stderr=subprocess.STDOUT, cwd='.')
+	except subprocess.CalledProcessError as e:
+		print 'ERROR:'
+		print '\te.returncode: {}'.format(e.returncode)
+		print '\te.cmd: {}'.format(e.cmd)
+		print '\te.output: {}'.format(e.output)
+		sys.exit(0)
+
 
 # trainClassifier :: Tree String -> String -> IO ()
 def trainClassifier(classifier_yaml, output_dir):
@@ -191,36 +199,42 @@ def trainClassifier(classifier_yaml, output_dir):
 		]
 
 	# TODO: Pipe ouptut to file, since this is a long running process.
-	cmd_ouptut = subprocess.check_output(trainingCommand, stderr=subprocess.STDOUT, cwd='{}'.format(output_dir))
 	with open('{}/output_training.txt'.format(output_dir), 'w') as cmd_output_file:
-		cmd_output_file.write(cmd_ouptut)
-		cmd_output_file.flush()
+		cmd_ouptut = subprocess.check_call(trainingCommand, stdout=cmd_output_file, stderr=subprocess.STDOUT, cwd='{}'.format(output_dir))
 
 # runClassifier :: Tree String -> String -> IO ()
 def runClassifier(classifier_yaml, output_dir):
 	traincascade_data_dir = '{}/data'.format(output_dir)
 
-	detections_fname = '{}/detections.dat'.format(output_dir)
+	for input_dir in classifier_yaml['testing']['directories']:
+		input_source_name = input_dir.strip('/').split('/')[-1]
 
-	results_dir = '{}/results'.format(output_dir)
-	results_dir_relative = '{}'.format(results_dir)
-	if not os.path.isdir(results_dir_relative):
-		print '\n## Creating results directory: {}'.format(results_dir_relative)
-		os.makedirs(results_dir_relative)
-	else:
-		print '\n## Using existing results directory: {}'.format(results_dir_relative)
+		results_dir = '{}/{}_results'.format(output_dir, input_source_name)
+		if not os.path.isdir(results_dir):
+			print '## Creating results directory: {}'.format(results_dir)
+			os.makedirs(results_dir)
+		else:
+			print '## Using existing results directory: {}'.format(results_dir)
 
-	runCommand = [ './opencv_runner/build/opencv_runner'
-		, traincascade_data_dir + '/cascade.xml'
-		, detections_fname
-		, classifier_yaml['testing']['inputDir']
-		, results_dir
-		, 'false' # Do not save result images
-		]
-	cmd_ouptut = subprocess.check_output(runCommand, stderr=subprocess.STDOUT, cwd='.')
-	with open('{}/output_run.txt'.format(output_dir), 'w') as cmd_output_file:
-		cmd_output_file.write(cmd_ouptut)
-		cmd_output_file.flush()
+		detections_fname = '{}/{}_detections.dat'.format(output_dir, input_source_name)
+
+		runCommand = [ './opencv_runner/build/opencv_runner'
+			, traincascade_data_dir + '/cascade.xml'
+			, detections_fname
+			, input_dir
+			, results_dir
+			, 'false' # Do not save result images
+			]
+
+		try:
+			with open('{}/output_run_{}.txt'.format(output_dir, input_source_name), 'w') as cmd_output_file:
+				subprocess.check_call(runCommand, stdout=cmd_output_file, stderr=subprocess.STDOUT, cwd='.')
+		except subprocess.CalledProcessError as e:
+			print 'ERROR:'
+			print '\te.returncode: {}'.format(e.returncode)
+			print '\te.cmd: {}'.format(e.cmd)
+			print '\te.output: {}'.format(e.output)
+			sys.exit(0)
 
 
 if __name__ == "__main__":
