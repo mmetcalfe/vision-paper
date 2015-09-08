@@ -69,6 +69,7 @@ def isDetection(obj, actual):
 	centre_error = math.sqrt(sqrDist(obj_centre, act_centre))
 	rel_centre_error = centre_error / act_radius
 
+    # TODO: Document the criteria for a valid detection.
 	return radius_rel_error < 0.2 and rel_centre_error < 0.1
 
 
