@@ -210,11 +210,11 @@ def runClassifier(classifier_yaml, output_dir):
 		input_source_name = input_dir.strip('/').split('/')[-1]
 
 		results_dir = '{}/{}_results'.format(output_dir, input_source_name)
-		if not os.path.isdir(results_dir):
-			print '## Creating results directory: {}'.format(results_dir)
-			os.makedirs(results_dir)
-		else:
-			print '## Using existing results directory: {}'.format(results_dir)
+		# if not os.path.isdir(results_dir):
+		# 	print '## Creating results directory: {}'.format(results_dir)
+		# 	os.makedirs(results_dir)
+		# else:
+		# 	print '## Using existing results directory: {}'.format(results_dir)
 
 		detections_fname = '{}/{}_detections.dat'.format(output_dir, input_source_name)
 

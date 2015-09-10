@@ -179,71 +179,71 @@ if __name__ == "__main__":
 	from generate_trials import generateTrials
 	generateTrials(args.template_yaml, args.output_dir)
 
-
-	print '===== PREPROCESS TRIALS ====='
-	from train_classifier import preprocessTrial
-	from train_classifier import TooFewImagesError
-
-	preprocessing_was_successful = True
-	maxImageCountDiff = (0, 0, 0)
-
 	trial_files = glob.glob("{}/*.yaml".format(args.output_dir))
-	for trial_yaml in trial_files:
-		print '    Preprocessing: {}'.format(trial_yaml)
-		# Read classifier training file:
-		classifier_yaml = loadYamlFile(trial_yaml)
-		output_dir = trial_yaml.split('.yaml')[0]
 
-		# Preprocess the trial:
-		try:
-			preprocessTrial(classifier_yaml, output_dir)
-		except TooFewImagesError as e:
-			preprocessing_was_successful = False
-			print e
-			imgCountDiff = map(lambda (p, r): r - p, zip(e.presentCounts, e.requiredCounts))
-			maxImageCountDiff = map(lambda (m, c): max(m, c), zip(maxImageCountDiff, imgCountDiff))
-
-	if not preprocessing_was_successful:
-		print '\nNOT ENOUGH IMAGES! TRAINING CANCELLED!'
-		print 'maxImageCountDiff: {}'.format(maxImageCountDiff)
-		sys.exit(1)
-
-
-	print '===== CREATE SAMPLES ====='
-	from train_classifier import createSamples
-
-	for trial_yaml in trial_files:
-		print '    Creating samples for: {}'.format(trial_yaml)
-
-		# Read classifier training file:
-		classifier_yaml = loadYamlFile(trial_yaml)
-		output_dir = trial_yaml.split('.yaml')[0]
-
-		createSamples(classifier_yaml, output_dir)
-
-
-	print '===== TRAIN CLASSIFIERS ====='
-	from train_classifier import trainClassifier
-
-	def doTraining(fname):
-		# Read classifier training file:
-		classifier_yaml = loadYamlFile(fname)
-		output_dir = fname.split('.yaml')[0]
-		trainClassifier(classifier_yaml, output_dir)
-
-	with futures.ThreadPoolExecutor(max_workers=8) as executor:
-		future_results = dict((executor.submit(doTraining, fname), fname) for fname in trial_files)
-
-		for future in futures.as_completed(future_results):
-			fname = future_results[future]
-			if future.exception() is not None:
-				print '{} generated an exception: {}'.format(fname, future.exception())
-			else:
-				print '{} completed training successfully'.format(fname)
-
-
-	# TODO: Scan output files for possible errors.
-	# (check for bad words: 'cannot', 'error', 'not', 'fail')
+	# print '===== PREPROCESS TRIALS ====='
+	# from train_classifier import preprocessTrial
+	# from train_classifier import TooFewImagesError
+	#
+	# preprocessing_was_successful = True
+	# maxImageCountDiff = (0, 0, 0)
+	#
+	# for trial_yaml in trial_files:
+	# 	print '    Preprocessing: {}'.format(trial_yaml)
+	# 	# Read classifier training file:
+	# 	classifier_yaml = loadYamlFile(trial_yaml)
+	# 	output_dir = trial_yaml.split('.yaml')[0]
+	#
+	# 	# Preprocess the trial:
+	# 	try:
+	# 		preprocessTrial(classifier_yaml, output_dir)
+	# 	except TooFewImagesError as e:
+	# 		preprocessing_was_successful = False
+	# 		print e
+	# 		imgCountDiff = map(lambda (p, r): r - p, zip(e.presentCounts, e.requiredCounts))
+	# 		maxImageCountDiff = map(lambda (m, c): max(m, c), zip(maxImageCountDiff, imgCountDiff))
+	#
+	# if not preprocessing_was_successful:
+	# 	print '\nNOT ENOUGH IMAGES! TRAINING CANCELLED!'
+	# 	print 'maxImageCountDiff: {}'.format(maxImageCountDiff)
+	# 	sys.exit(1)
+	#
+	#
+	# print '===== CREATE SAMPLES ====='
+	# from train_classifier import createSamples
+	#
+	# for trial_yaml in trial_files:
+	# 	print '    Creating samples for: {}'.format(trial_yaml)
+	#
+	# 	# Read classifier training file:
+	# 	classifier_yaml = loadYamlFile(trial_yaml)
+	# 	output_dir = trial_yaml.split('.yaml')[0]
+	#
+	# 	createSamples(classifier_yaml, output_dir)
+	#
+	#
+	# print '===== TRAIN CLASSIFIERS ====='
+	# from train_classifier import trainClassifier
+	#
+	# def doTraining(fname):
+	# 	# Read classifier training file:
+	# 	classifier_yaml = loadYamlFile(fname)
+	# 	output_dir = fname.split('.yaml')[0]
+	# 	trainClassifier(classifier_yaml, output_dir)
+	#
+	# with futures.ThreadPoolExecutor(max_workers=8) as executor:
+	# 	future_results = dict((executor.submit(doTraining, fname), fname) for fname in trial_files)
+	#
+	# 	for future in futures.as_completed(future_results):
+	# 		fname = future_results[future]
+	# 		if future.exception() is not None:
+	# 			print '{} generated an exception: {}'.format(fname, future.exception())
+	# 		else:
+	# 			print '{} completed training successfully'.format(fname)
+	#
+	#
+	# # TODO: Scan output files for possible errors.
+	# # (check for bad words: 'cannot', 'error', 'not', 'fail')
 
 	print '===== RUN CLASSIFIERS ====='
 	from train_classifier import runClassifier
@@ -256,7 +256,7 @@ if __name__ == "__main__":
 	#
 	# 	runClassifier(classifier_yaml, output_dir)
 
-def doRunning(fname):
+def doRunning(trial_yaml):
 	# Read classifier training file:
 	classifier_yaml = loadYamlFile(trial_yaml)
 	output_dir = trial_yaml.split('.yaml')[0]

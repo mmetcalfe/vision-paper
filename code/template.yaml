@@ -91,6 +91,6 @@ training:
         mode: ALL # Use extended Haar features
 testing:
     directories:
-        - samples/positive_test_set/
+        - samples/positive_test_set_cropped/
         - samples/hard_negative_test_set/
         - samples/background_test_set/

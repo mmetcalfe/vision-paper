@@ -5,16 +5,25 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/objdetect/objdetect.hpp>
 
-class CascadeClassifier {
+class CascadeClassifier : public cv::CascadeClassifier {
 
     private:
 
-        cv::CascadeClassifier classifier;
+        // cv::CascadeClassifier classifier;
 
     public:
 
-        bool load(std::string path);
-        void detect(cv::Mat& frame, std::vector<cv::Rect>& objects, cv::Size minSize=cv::Size(), cv::Size maxSize=cv::Size(), double scaleFactor=1.1, int minNeighbours=3, int flags=0);
+        // bool load(std::string path);
+        int detect(
+          cv::Mat& frame,
+          std::vector<cv::Rect>& objects,
+          cv::Size minSize=cv::Size(24, 24),
+          cv::Size maxSize=cv::Size(24, 24),
+          // cv::Size minSize=cv::Size(),
+          // cv::Size maxSize=cv::Size(),
+          double scaleFactor=1.1,
+          int minNeighbours=0,
+          int flags=0);
 
 };
 
