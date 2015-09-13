@@ -23,16 +23,33 @@
 #  - posFrac: 0.66
 #  - hardNegFrac: 0.75
 
+# # Dataset for testing hardNegFrac hypothesis:
+# number: { paramSet: ['6000'] }
+# hardNegFrac: { paramSet: ['0.00', '0.2', '0.4', '0.6', '0.8', '1.0'] }
+# skipFrac: { paramSet: ['0.2'] }
+
+# # Dataset for testing classifier improvement due to number of samples:
+# number: { paramSet: ['1000', '2000', '3000', '4000', '5000', '6000'] }
+# hardNegFrac: { paramSet: ['0.2'] }
+# skipFrac: { paramSet: ['0.2'] }
+
+# # Combined dataset for testing both hypotheses:
+# number: { paramSet: ['1000', '2000', '3000', '4000', '5000', '6000'] }
+# hardNegFrac: { paramSet: ['0.00', '0.2', '0.4', '0.6', '0.8', 1.0] }
+# skipFrac: { paramSet: ['0.2'] }
+# posFrac: { paramSet: ['0.66'] }
+# featureType: { paramSet: [HAAR, LBP, HOG] }
+
 dataset:
     description:
         # number: { paramSet: ['1000', '2000', '3000', '4000', '5000', '6000'] } # Total number of samples.
-        number: { paramSet: ['1000', '2000', '3000'] } # Total number of samples.
+        number: { paramSet: ['6000'] } # Total number of samples.
         # number: { paramSet: ['500'] } # Total number of samples.
         # posFrac: { paramSet: ['0.33', '0.5', '0.66'] } # Fraction of samples that will be positive.
         # posFrac: { paramSet: ['0.33', '0.66'] } # Fraction of samples that will be positive.
         posFrac: { paramSet: ['0.66'] } # Fraction of samples that will be positive.
-        hardNegFrac: { paramSet: ['0.00', '0.25'] } # Fraction of *negative* samples that will be hard negatives.
-        # hardNegFrac: { paramSet: ['0.00'] } # Fraction of *negative* samples that will be hard negatives.
+        hardNegFrac: { paramSet: ['0.00', '0.2', '0.4', '0.6', '0.8', '1.0'] }
+        # hardNegFrac: { paramSet: ['0.00', '0.25'] } # Fraction of *negative* samples that will be hard negatives.
         synsets: # Sample from only these synsets (use '.*' for all).
             pos:
                 - '.*'
@@ -78,7 +95,7 @@ training:
 
         # TODO: Consider just using numPos instead of skipFrac.
         # skipFrac: { paramSet: ['0.1'] } # http://answers.opencv.org/question/4368/
-        skipFrac: { paramSet: ['0.1', '0.2'] } # http://answers.opencv.org/question/4368/
+        skipFrac: { paramSet: ['0.2'] } # http://answers.opencv.org/question/4368/
                         # While the selection, some new positive samples from
                         # vec-file can be recognized as background right away
                         # by the current cascade and we skip such samples. The

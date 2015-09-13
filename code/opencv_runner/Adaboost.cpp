@@ -130,7 +130,8 @@ std::vector<cv::Rect> Adaboost::detectObjects(cv::Mat& frame, cv::Mat& processed
 	// Create a vector of rectangles to store the detected objects.
 	std::vector<cv::Rect> objects;
 	// Detect the objects using the processed frame and store the results in objects.
-	cascadeClassifier.detect(processedFrame, objects);
+	int retcode = cascadeClassifier.detectFullImage(processedFrame, objects);
+	std::cout << "retcode: " << retcode << std::endl;
 
 	if (drawDetections) {
 		// Iterate through every detection.

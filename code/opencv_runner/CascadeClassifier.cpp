@@ -1,5 +1,6 @@
 #include "CascadeClassifier.h"
 #include <opencv2/imgproc/imgproc.hpp>
+#include <iostream>
 
 // /**
 //  * Attempts to load a classifier from the specified path.
@@ -22,8 +23,9 @@
  * @param minNeighbors Specifies how many neighbors each candidate rectangle should have to retain it.
  * @param flags Parameter with the same meaning for an old cascade as in the function cvHaarDetectObjects. It is not used for a new cascade.
  */
-int CascadeClassifier::detect(cv::Mat& image, std::vector<cv::Rect>& objects, cv::Size minSize, cv::Size maxSize, double scaleFactor, int minNeighbours, int flags) {
+int CascadeClassifier::detectFullImage(cv::Mat& image, std::vector<cv::Rect>& objects, cv::Size minSize, cv::Size maxSize, double scaleFactor, int minNeighbours, int flags) {
     // classifier.detectMultiScale(image, objects, scaleFactor, minNeighbours, flags, minSize, maxSize);
+    // detect(image, objects, scaleFactor, minNeighbours, flags, minSize, maxSize);
 
     cv::Mat& scaledImage = image;
 
@@ -44,7 +46,22 @@ int CascadeClassifier::detect(cv::Mat& image, std::vector<cv::Rect>& objects, cv
 
     // Once once over the whole image
     double gypWeight;
-    int result = runAt(this->featureEvaluator, cv::Point(0, 0), gypWeight);
+    // int result = runAt(this->featureEvaluator, cv::Point(0, 0), gypWeight);
+
+    int result = 0;
+    if (data.featureType != cv::FeatureEvaluator::HOG) {
+        bool setWindowSuccess = featureEvaluator->setWindow(cv::Point(0, 0));
+        if (!setWindowSuccess) {
+            CV_Assert(false);
+            return -1;
+        }
+        result = runAt(this->featureEvaluator, cv::Point(0, 0), gypWeight);
+    } else {
+        std::cout << __LINE__ << ": HOG classifier." << std::endl;
+        // detect(image, objects);//, scaleFactor, minNeighbours, flags, minSize, maxSize);
+        detectMultiScale(image, objects, scaleFactor, minNeighbours, flags, minSize, maxSize);
+        std::cout << __LINE__ << ": num_objects: " << objects.size() << std::endl;
+    }
 
     if (result == 1) {
         cv::Rect rect = {0, 0, 24, 24}; // {x, y, w, h}

@@ -14,15 +14,15 @@ class CascadeClassifier : public cv::CascadeClassifier {
     public:
 
         // bool load(std::string path);
-        int detect(
+        int detectFullImage(
           cv::Mat& frame,
           std::vector<cv::Rect>& objects,
           cv::Size minSize=cv::Size(24, 24),
-          cv::Size maxSize=cv::Size(24, 24),
+          // cv::Size maxSize=cv::Size(25, 25),
           // cv::Size minSize=cv::Size(),
-          // cv::Size maxSize=cv::Size(),
+          cv::Size maxSize=cv::Size(),
           double scaleFactor=1.1,
-          int minNeighbours=0,
+          int minNeighbours=1,
           int flags=0);
 
 };
