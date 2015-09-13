@@ -1,0 +1,110 @@
+\begin{thebibliography}{10}
+
+\bibitem{annable2013nubots}
+B.~Annable, D.~Budden, S.~Calland, S.~K. Chalup, S.~K. Fenn, M.~Flannery,
+  J.~Fountain, R.~A. King, A.~Mendes, and M.~Metcalfe.
+\newblock The {NUbots} team description paper 2013, {RoboCup Humanoid League},
+  2013.
+
+\bibitem{fellbaum1998wordnet}
+F.~Christiane.
+\newblock {\em WordNet: An Electronic Lexical Database}.
+\newblock Bradford Books, 1998.
+
+\bibitem{dalal2005histograms}
+N.~Dalal and B.~Triggs.
+\newblock Histograms of oriented gradients for human detection.
+\newblock In {\em Procceedings of the IEEE Computer Society Conference on
+  Computer Vision and Pattern Recognition (CVPR 2005)}, volume~1, pages
+  886--893. IEEE, 2005.
+
+\bibitem{imagenet_cvpr09}
+J.~Deng, W.~Dong, R.~Socher, L.-J. Li, K.~Li, and L.~Fei-Fei.
+\newblock {ImageNet: A Large-Scale Hierarchical Image Database}.
+\newblock In {\em Conference on Computer Vision and Pattern Recognition (CVPR
+  2009),}, 2009.
+
+\bibitem{gross2003image}
+R.~Gross and V.~Brajovic.
+\newblock An image preprocessing algorithm for illumination invariant face
+  recognition.
+\newblock In {\em Audio-and Video-Based Biometric Person Authentication}, pages
+  10--18. Springer, 2003.
+
+\bibitem{KitanoEtAl1997}
+H.~Kitano, M.~Asada, Y.~Kuniyoshi, I.~Noda, E.~Osawa, and H.~Matsubara.
+\newblock Robocup. a challenge problem for ai.
+\newblock {\em AI Magazine}, 18(1):73--85, 1997.
+
+\bibitem{li2013survey}
+X.~Li, H.~Lu, D.~Xiong, H.~Zhang, and Z.~Zheng.
+\newblock A survey on visual perception for {RoboCup} {MSL} soccer robots.
+\newblock {\em International Journal of Advanced Robotic Systems,}, vol. 10:pp.
+  110--120, 2013.
+
+\bibitem{liao2007learning}
+S.~Liao, X.~Zhu, Z.~Lei, L.~Zhang, and S.~Z. Li.
+\newblock Learning multi-scale block local binary patterns for face
+  recognition.
+\newblock In {\em Advances in Biometrics}, pages 828--837. Springer, 2007.
+
+\bibitem{Lienhart2002extended}
+R.~Lienhart and J.~Maydt.
+\newblock An extended set of haar-like features for rapid object detection.
+\newblock In {\em International Conference on Image Processing, 2002},
+  volume~1, pages 900--903. IEEE, 2002.
+
+\bibitem{masselli2013haar}
+A.~Masselli, R.~Hanten, and A.~Zell.
+\newblock Robust real-time detection of multiple balls on a mobile robot.
+\newblock In {\em European Conference on Mobile Robots (ECMR 2013)}, pages
+  355--360, September 2013.
+
+\bibitem{mitri2004fast}
+S.~Mitri, K.~Perv{\"o}lz, H.~Surmann, and A.~N{\"u}chter.
+\newblock Fast color-independent ball detection for mobile robots.
+\newblock In {\em Proceedings of the IEEE Computer Society International
+  Conference Mechatronics and Robotics}, pages 900--905, 2004.
+
+\bibitem{nillius2008shading}
+P.~Nillius, J.~Sullivan, and A.~Argyros.
+\newblock Shading models for illumination and reflectance invariant shape
+  detectors.
+\newblock In {\em Proceedings of the IEEE Computer Society Conference on
+  Computer Vision and Pattern Recognition (CVPR 2014)}, pages 1--8, Los
+  Alamitos, CA, USA, 2008. IEEE.
+
+\bibitem{schulz2007ball}
+H.~Schulz, H.~Strasdat, and S.~Behnke.
+\newblock A ball is not just orange: Using color and luminance to classify
+  regions of interest.
+\newblock In {\em Proceedings of the Second Workshop on Humanoid Soccer Robots,
+  Pittsburgh, PA, USA}, 2007.
+
+\bibitem{treptow2004filter}
+A.~Treptow and A.~Zell.
+\newblock Real-time object tracking for soccer-robots without color
+  information.
+\newblock {\em Robotics and Autonomous Systems}, vol. 48(1):pp. 41--48, 2004.
+
+\bibitem{viola2001rapid}
+P.~Viola and M.~Jones.
+\newblock Rapid object detection using a boosted cascade of simple features.
+\newblock In {\em Proceedings of the IEEE Computer Society Conference on
+  Computer Vision and Pattern Recognition (CVPR 2001)}, volume~1, pages
+  511--518. IEEE, 2001.
+
+\bibitem{viola2001robust}
+P.~Viola and M.~Jones.
+\newblock Robust real-time object detection.
+\newblock {\em International Journal of Computer Vision,}, vol. 4:pp. 34--47,
+  2001.
+
+\bibitem{zhang2013novel}
+H.~Zhang, H.~Lu, P.~Dong, D.~Xiong, and Z.~Zheng.
+\newblock A novel generic ball recognition algorithm based on omnidirectional
+  vision for soccer robots.
+\newblock {\em International Journal of Advanced Robotic Systems,}, vol. 10,
+  article 388, 2013.
+
+\end{thebibliography}
