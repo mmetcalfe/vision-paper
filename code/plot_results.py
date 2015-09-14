@@ -47,6 +47,10 @@ def plotResultsTable(results_table):
     matplotlib.rc('font', **font)
     matplotlib.rc('text', usetex=True)
 
+    from matplotlib.font_manager import FontProperties
+    smallFontP = FontProperties()
+    smallFontP.set_size('small')
+
     # Varied the following:
     #   - number      (3)
     #   - hardNegFrac (2)
@@ -65,11 +69,11 @@ def plotResultsTable(results_table):
     series_parts = partitionOn('featureType', results_table.values())
 
     ind_parts = partitionOn('hardNegFrac', results_table.values())
-    ind_labels = sorted(ind_parts.keys())
+    ind_labels = map(lambda s: '{:2d}'.format(int(round(100*float(s)))), sorted(ind_parts.keys()))
 
     N = len(ind_parts.keys())
     ind = np.arange(N)  # the x locations for the groups
-    width = 0.2         # the width of the bars
+    width = 0.4         # the width of the bars
 
     series_cols = ['#fc8d59', '#ffffbf', '#91bfdb']
 
@@ -83,23 +87,26 @@ def plotResultsTable(results_table):
             # attach some text labels
             for rect in rects:
                 height = rect.get_height()
-                ax.text(rect.get_x()+rect.get_width()/2., height + width*0.025, '{:2.2}'.format(float(height)),
-                        ha='center', va='bottom')
+                ax.text(rect.get_x()+rect.get_width()/2., height + width*0.025, '{:.1f}'.format(float(height)),
+                        ha='center', va='bottom',
+                        fontsize=7)
+                        # fontsize=13)
 
-        series_x_offset = -width*0.5
+        series_x_offset = 0
+        # series_x_offset = -width*0.5
         series_num = 0
         part_rects_dict = {}
         for part_key in sorted(series_parts.keys()):
             series = series_parts[part_key]
-            # trials = series
-            trials = filter(lambda t:
-                float(t['number'])==1000 and
-                float(t['skipFrac'])==0.1
-                , series)
+            trials = series
+            # trials = filter(lambda t:
+            #     float(t['number'])==1000 and
+            #     # float(t['skipFrac'])==0.1
+            #     , series)
             sorted_trials = sorted(trials, key=lambda x: float(x['hardNegFrac']))
             values = map(itemgetter(value_key), sorted_trials)
-            # TODO: Handle missing values!
-            values = map(lambda v: 0 if v is None else v, values)
+            values = map(lambda v: 0 if v is None else v, values) # TODO: Handle missing values!
+            values = map(lambda v: 100*v, values) # convert to percentages
             print values
             series_rects = ax.bar(ind + series_x_offset, values, width, color=series_cols[series_num])
             series_x_offset += width
@@ -116,10 +123,6 @@ def plotResultsTable(results_table):
 
         sorted_part_keys = sorted(part_rects_dict.keys())
 
-        from matplotlib.font_manager import FontProperties
-        fontP = FontProperties()
-        fontP.set_size('small')
-
         # # Shrink current axis's height by 10% on the bottom
         # box = ax.get_position()
         # shrinkf = 0.8
@@ -129,9 +132,9 @@ def plotResultsTable(results_table):
         ax.legend([part_rects_dict[key] for key in sorted_part_keys]
         , sorted_part_keys
         , ncol=3
-        , prop=fontP
+        , prop=smallFontP
         , loc='upper center'
-        , bbox_to_anchor=(0.5, 1.2))
+        , bbox_to_anchor=(0.5, 1.15))
         #           fancybox=True)
 
         # plt.show()

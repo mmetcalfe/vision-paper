@@ -18,7 +18,7 @@ from concurrent import futures
 
 from train_classifier import loadYamlFile
 
-NUM_THREADS = 12
+NUM_THREADS = 6
 
 def loadBbinfo(cache_name):
 	cache = {}
@@ -258,21 +258,21 @@ if __name__ == "__main__":
 	#
 	# 	runClassifier(classifier_yaml, output_dir)
 
-def doRunning(trial_yaml):
-	# Read classifier training file:
-	classifier_yaml = loadYamlFile(trial_yaml)
-	output_dir = trial_yaml.split('.yaml')[0]
-	runClassifier(classifier_yaml, output_dir)
+	def doRunning(trial_yaml):
+		# Read classifier training file:
+		classifier_yaml = loadYamlFile(trial_yaml)
+		output_dir = trial_yaml.split('.yaml')[0]
+		runClassifier(classifier_yaml, output_dir)
 
-with futures.ThreadPoolExecutor(max_workers=NUM_THREADS) as executor:
-	future_results = dict((executor.submit(doRunning, fname), fname) for fname in trial_files)
+	with futures.ThreadPoolExecutor(max_workers=NUM_THREADS) as executor:
+		future_results = dict((executor.submit(doRunning, fname), fname) for fname in trial_files)
 
-	for future in futures.as_completed(future_results):
-		fname = future_results[future]
-		if future.exception() is not None:
-			print '{} generated an exception: {}'.format(fname, future.exception())
-		else:
-			print '{} completed running successfully'.format(fname)
+		for future in futures.as_completed(future_results):
+			fname = future_results[future]
+			if future.exception() is not None:
+				print '{} generated an exception: {}'.format(fname, future.exception())
+			else:
+				print '{} completed running successfully'.format(fname)
 
 
 	print '===== COLLECT RESULTS ====='

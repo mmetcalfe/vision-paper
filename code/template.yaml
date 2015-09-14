@@ -43,12 +43,12 @@
 dataset:
     description:
         # number: { paramSet: ['1000', '2000', '3000', '4000', '5000', '6000'] } # Total number of samples.
-        number: { paramSet: ['6000'] } # Total number of samples.
+        number: { paramSet: ['9300'] } # Total number of samples.
         # number: { paramSet: ['500'] } # Total number of samples.
         # posFrac: { paramSet: ['0.33', '0.5', '0.66'] } # Fraction of samples that will be positive.
         # posFrac: { paramSet: ['0.33', '0.66'] } # Fraction of samples that will be positive.
-        posFrac: { paramSet: ['0.66'] } # Fraction of samples that will be positive.
-        hardNegFrac: { paramSet: ['0.00', '0.2', '0.4', '0.6', '0.8', '1.0'] }
+        posFrac: { paramSet: ['0.4'] } # Fraction of samples that will be positive.
+        hardNegFrac: { paramSet: ['0.0', '0.05', '0.1', '0.15', '0.2', '0.25', '0.3', '0.35', '0.4', '0.45', '0.5'] }
         # hardNegFrac: { paramSet: ['0.00', '0.25'] } # Fraction of *negative* samples that will be hard negatives.
         synsets: # Sample from only these synsets (use '.*' for all).
             pos:
@@ -83,11 +83,12 @@ dataset:
 training:
     basic:
         data: classifiers
-        numStages: '20' # <number_of_stages = 20>]
-        numPos: '100' # Number of positive samples used to train each stage of the classifier.
-        numNeg: '200' # Number of negative samples used to train each stage of the classifier.
+        numStages: '10' # <number_of_stages = 20>]
+        numPos: '200' # Number of positive samples used to train each stage of the classifier.
+        numNeg: '350' # Number of negative samples used to train each stage of the classifier.
     cascade:
-        featureType: { paramSet: [HAAR, LBP, HOG] } # {HAAR(default), LBP, HOG}
+        featureType: { paramSet: [HAAR, LBP] } # {HAAR(default), LBP, HOG}
+        # featureType: { paramSet: [HAAR, LBP, HOG] } # {HAAR(default), LBP, HOG}
     boost:
         minHitRate: '0.99' # 0.995
         maxFalseAlarmRate: '0.5' # 0.5

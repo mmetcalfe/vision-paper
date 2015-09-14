@@ -165,7 +165,7 @@ if __name__ == "__main__":
         trial_results['posFrac'] = trial_data['dataset']['description']['posFrac']
         trial_results['hardNegFrac'] = trial_data['dataset']['description']['hardNegFrac']
         trial_results['featureType'] = trial_data['training']['cascade']['featureType']
-        trial_results['skipFrac'] = trial_data['training']['boost']['skipFrac']
+        # trial_results['skipFrac'] = trial_data['training']['boost']['skipFrac']
 
         # Initialise trial totals:
         trial_totals = {}
