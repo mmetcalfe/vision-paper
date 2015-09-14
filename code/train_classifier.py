@@ -45,9 +45,10 @@ def requiredImageCounts(trial_yaml):
 	datasetSize = int(trial_yaml['dataset']['description']['number'])
 	posFrac = float(trial_yaml['dataset']['description']['posFrac'])
 	hardNegFrac = float(trial_yaml['dataset']['description']['hardNegFrac'])
-	numPos = int(datasetSize * posFrac)
-	numNeg = int(datasetSize * (1 - posFrac) * hardNegFrac)
-	numBak = max(0, datasetSize - numPos - numNeg)
+	numPos = int(round(datasetSize * posFrac))
+	numNonPos = datasetSize - numPos
+	numNeg = int(round(numNonPos * hardNegFrac))
+	numBak = max(0, numNonPos - numNeg)
 	return (numPos, numNeg, numBak)
 
 # sampleTrainingImages :: String -> [String] -> Int -> [String]
@@ -187,8 +188,8 @@ def trainClassifier(classifier_yaml, output_dir):
 		, '-vec',               balls_vec_fname.split('/')[-1]
 		, '-data',              'data'
 		, '-bg',                neg_info_fname.split('/')[-1]
-		, '-numPos',            str(numPosTraining)
-		, '-numNeg',            str(numNegTraining)
+		, '-numPos',            '50'#str(numPosTraining)
+		, '-numNeg',            '100'#str(numNegTraining)
 		, '-numStages',         classifier_yaml['training']['basic']['numStages']
 		, '-featureType',       classifier_yaml['training']['cascade']['featureType']
 		, '-minHitRate',        classifier_yaml['training']['boost']['minHitRate']
