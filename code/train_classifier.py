@@ -109,9 +109,12 @@ def preprocessTrial(classifier_yaml, output_dir):
 		details = global_info[key]
 		dat_file.write("{}{} {}".format(info_entry_prefix, img.strip('../'), details))
 
+	from random import shuffle
+	shuffle(pos_image_files)
+
 	# Write pos_image_files and bounding box info to pos_info_fname:
 	with open('{}'.format(pos_info_fname), 'w') as dat_file:
-		images = sorted(pos_image_files)
+		images = pos_image_files
 		write_img(images[0], dat_file)
 		for img in images[1:]:
 			# Use the bounding boxes from the global info file:
@@ -119,9 +122,12 @@ def preprocessTrial(classifier_yaml, output_dir):
 			write_img(img, dat_file)
 		dat_file.flush()
 
+
+	all_neg_image_files = bak_image_files + neg_image_files
+	shuffle(all_neg_image_files)
 	# Write neg_image_files to neg_info_fname:
 	with open('{}'.format(neg_info_fname), 'w') as dat_file:
-		images = sorted(bak_image_files + neg_image_files)
+		images = all_neg_image_files
 		dat_file.write("{}{}".format(info_entry_prefix, images[0].strip('../')))
 		for img in images[1:]:
 			dat_file.write("\n{}{}".format(info_entry_prefix, img.strip('../')))
@@ -163,33 +169,33 @@ def trainClassifier(classifier_yaml, output_dir):
 	balls_vec_fname = '{}/balls.vec'.format(output_dir)
 	neg_info_fname = '{}/negative.txt'.format(output_dir)
 
-	# From the opencv_traincascade documentation:
-	#	-numPos <number_of_positive_samples>
-	#	-numNeg <number_of_negative_samples>
-	#		Number of positive/negative samples used in training for every classifier stage.
-	# The key word being 'every'. We need to ensure that we don't ask for so
-	# many samples that the last stages don't have enough.
-	#
-	# We'll use the formula derived on the following page to decide how many
-	# samples to use, after solving for numPos:
-	# 	http://answers.opencv.org/question/4368/
-	# (the formula seems a little off to me - it seems like we should raise
-	#  to the power of numStages rather than multiplying? The latter is more
-	#  conservative though, so it shouldn't be a problem.)
-	skipFrac = float(classifier_yaml['training']['boost']['skipFrac']) # A count of all the skipped samples from vec-file (for all stages).
-	skippedSamples = numPos * skipFrac # A count of all the skipped samples from vec-file (for all stages).
-	minHitRate = float(classifier_yaml['training']['boost']['minHitRate'])
-	numStages = float(classifier_yaml['training']['basic']['numStages'])
-	numPosTraining = int((numPos - skippedSamples) / (1 + (1 - minHitRate) * (numStages - 1)))
-	# numPosTraining = int((numPos - skippedSamples) / (1 + (1 - minHitRate)**(numStages - 1))) # ??
-	numNegTraining = (numNeg + numBak)
+	# # From the opencv_traincascade documentation:
+	# #	-numPos <number_of_positive_samples>
+	# #	-numNeg <number_of_negative_samples>
+	# #		Number of positive/negative samples used in training for every classifier stage.
+	# # The key word being 'every'. We need to ensure that we don't ask for so
+	# # many samples that the last stages don't have enough.
+	# #
+	# # We'll use the formula derived on the following page to decide how many
+	# # samples to use, after solving for numPos:
+	# # 	http://answers.opencv.org/question/4368/
+	# # (the formula seems a little off to me - it seems like we should raise
+	# #  to the power of numStages rather than multiplying? The latter is more
+	# #  conservative though, so it shouldn't be a problem.)
+	# skipFrac = float(classifier_yaml['training']['boost']['skipFrac']) # A count of all the skipped samples from vec-file (for all stages).
+	# skippedSamples = numPos * skipFrac # A count of all the skipped samples from vec-file (for all stages).
+	# minHitRate = float(classifier_yaml['training']['boost']['minHitRate'])
+	# numStages = float(classifier_yaml['training']['basic']['numStages'])
+	# numPosTraining = int((numPos - skippedSamples) / (1 + (1 - minHitRate) * (numStages - 1)))
+	# # numPosTraining = int((numPos - skippedSamples) / (1 + (1 - minHitRate)**(numStages - 1))) # ??
+	# numNegTraining = (numNeg + numBak)
 
 	trainingCommand = [ 'opencv_traincascade'
 		, '-vec',               balls_vec_fname.split('/')[-1]
 		, '-data',              'data'
 		, '-bg',                neg_info_fname.split('/')[-1]
-		, '-numPos',            '50'#str(numPosTraining)
-		, '-numNeg',            '100'#str(numNegTraining)
+		, '-numPos',            classifier_yaml['training']['basic']['numPos'] #str(numPosTraining)
+		, '-numNeg',            classifier_yaml['training']['basic']['numNeg'] #str(numNegTraining)
 		, '-numStages',         classifier_yaml['training']['basic']['numStages']
 		, '-featureType',       classifier_yaml['training']['cascade']['featureType']
 		, '-minHitRate',        classifier_yaml['training']['boost']['minHitRate']

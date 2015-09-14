@@ -84,6 +84,8 @@ training:
     basic:
         data: classifiers
         numStages: '20' # <number_of_stages = 20>]
+        numPos: '100' # Number of positive samples used to train each stage of the classifier.
+        numNeg: '200' # Number of negative samples used to train each stage of the classifier.
     cascade:
         featureType: { paramSet: [HAAR, LBP, HOG] } # {HAAR(default), LBP, HOG}
     boost:
@@ -92,18 +94,18 @@ training:
         weightTrimRate: '0.95' # 0.95
         maxDepth: '1' # 1
         maxWeakCount: '100' # 100
-
-        # TODO: Consider just using numPos instead of skipFrac.
-        # skipFrac: { paramSet: ['0.1'] } # http://answers.opencv.org/question/4368/
-        skipFrac: { paramSet: ['0.2'] } # http://answers.opencv.org/question/4368/
-                        # While the selection, some new positive samples from
-                        # vec-file can be recognized as background right away
-                        # by the current cascade and we skip such samples. The
-                        # count of skipped sample depends on your vec-file
-                        # (how different samples are in it) and other training
-                        # parameters. This is an estimate of the total number
-                        # of skipped samples from vec-file (for all stages) as
-                        # a fraction of the total number of positive samples.
+        #
+        # # TODO: Consider just using numPos instead of skipFrac.
+        # # skipFrac: { paramSet: ['0.1'] } # http://answers.opencv.org/question/4368/
+        # skipFrac: { paramSet: ['0.2'] } # http://answers.opencv.org/question/4368/
+        #                 # While the selection, some new positive samples from
+        #                 # vec-file can be recognized as background right away
+        #                 # by the current cascade and we skip such samples. The
+        #                 # count of skipped sample depends on your vec-file
+        #                 # (how different samples are in it) and other training
+        #                 # parameters. This is an estimate of the total number
+        #                 # of skipped samples from vec-file (for all stages) as
+        #                 # a fraction of the total number of positive samples.
     haarFeature:
         mode: ALL # Use extended Haar features
 testing:
