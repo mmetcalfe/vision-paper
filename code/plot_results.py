@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib
 import matplotlib.pyplot as plt
 from operator import itemgetter
 
@@ -38,6 +39,14 @@ def partitionOn(key, results):
 
 def plotResultsTable(results_table):
 
+    font = {
+    # 'family' : 'normal',
+            # 'weight' : 'bold',
+            'size'   : 22}
+
+    matplotlib.rc('font', **font)
+    matplotlib.rc('text', usetex=True)
+
     # Varied the following:
     #   - number      (3)
     #   - hardNegFrac (2)
@@ -64,41 +73,66 @@ def plotResultsTable(results_table):
 
     series_cols = ['#fc8d59', '#ffffbf', '#91bfdb']
 
-    fig, ax = plt.subplots()
+    for value_key in ['precision', 'recall']:
+        fig, ax = plt.subplots()
 
-    def autolabel(rects):
-        # attach some text labels
-        for rect in rects:
-            height = rect.get_height()
-            ax.text(rect.get_x()+rect.get_width()/2., height + width*0.1, '%d'%int(height),
-                    ha='center', va='bottom')
+        plt.rc('text', usetex=True)
+        plt.rc('font', family='serif')
 
-    series_x_offset = 0
-    series_num = 0
-    for key in series_parts:
-        series = series_parts[key]
-        trials = filter(lambda t:
-            float(t['number'])==3000 and
-            float(t['skipFrac'])==0.1
-            , series)
-        sorted_trials = sorted(trials, key=lambda x: float(x['hardNegFrac']))
-        values = map(itemgetter('recall'), sorted_trials)
-        # TODO: Handle missing values!
-        values = map(lambda v: 0 if v is None else v, values)
-        print values
-        series_rects = ax.bar(ind + series_x_offset, values, width, color=series_cols[series_num])
-        series_x_offset += width
-        series_num += 1
-        autolabel(series_rects)
+        def autolabel(rects):
+            # attach some text labels
+            for rect in rects:
+                height = rect.get_height()
+                ax.text(rect.get_x()+rect.get_width()/2., height + width*0.025, '{:2.2}'.format(float(height)),
+                        ha='center', va='bottom')
 
-    # add some text for labels, title and axes ticks
-    ax.set_title('Precision by feature type')
-    ax.set_ylabel('Precision (%)')
-    ax.set_xticks(ind+width)
-    ax.set_xticklabels(ind_labels)
+        series_x_offset = -width*0.5
+        series_num = 0
+        part_rects_dict = {}
+        for part_key in sorted(series_parts.keys()):
+            series = series_parts[part_key]
+            # trials = series
+            trials = filter(lambda t:
+                float(t['number'])==1000 and
+                float(t['skipFrac'])==0.1
+                , series)
+            sorted_trials = sorted(trials, key=lambda x: float(x['hardNegFrac']))
+            values = map(itemgetter(value_key), sorted_trials)
+            # TODO: Handle missing values!
+            values = map(lambda v: 0 if v is None else v, values)
+            print values
+            series_rects = ax.bar(ind + series_x_offset, values, width, color=series_cols[series_num])
+            series_x_offset += width
+            series_num += 1
+            autolabel(series_rects)
+            part_rects_dict[part_key] = series_rects
 
+        # add some text for labels, title and axes ticks
+        # ax.set_title('Precision by feature type')
+        ax.set_ylabel('{} (\%)'.format(value_key.capitalize()))
+        ax.set_xlabel('Hard Neg. \%')
+        ax.set_xticks(ind+width)
+        ax.set_xticklabels(ind_labels)
 
-    # ax.legend( (rects1[0], rects2[0]), ('Men', 'Women') )
+        sorted_part_keys = sorted(part_rects_dict.keys())
 
-    # plt.show()
-    plt.savefig('results_fig.pdf', bbox_inches='tight')
+        from matplotlib.font_manager import FontProperties
+        fontP = FontProperties()
+        fontP.set_size('small')
+
+        # # Shrink current axis's height by 10% on the bottom
+        # box = ax.get_position()
+        # shrinkf = 0.8
+        # ax.set_position([box.x0, box.y0,# + box.height * (1.0-shrinkf),
+        #                  box.width, box.height * shrinkf])
+
+        ax.legend([part_rects_dict[key] for key in sorted_part_keys]
+        , sorted_part_keys
+        , ncol=3
+        , prop=fontP
+        , loc='upper center'
+        , bbox_to_anchor=(0.5, 1.2))
+        #           fancybox=True)
+
+        # plt.show()
+        plt.savefig('results_fig_{}.pdf'.format(value_key), bbox_inches='tight')
