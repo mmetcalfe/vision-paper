@@ -1,4 +1,7 @@
+*/.texpadtmp/
 /.texpadtmp/
+code/.Rhistory
+code/opencv_runner/.idea/
 *.pdf
 *.zip
 
