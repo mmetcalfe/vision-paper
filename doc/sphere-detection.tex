@@ -1,6 +1,7 @@
 \documentclass{sig-alternate-05-2015}
 
  \usepackage{graphicx}
+\usepackage{balance}
 
 % \usepackage{url}
 % \urldef{\mailsa}\path|{brendan.annable, mitchell.metcalfe, monica.olejniczak}@uon.edu.au|
@@ -68,15 +69,15 @@
 
 % TODO: Enter corrrect conference info
 	% DOI
-	\doi{10.475/123_4}
+	%\doi{10.475/123_4}
 	% ISBN
-	\isbn{123-4567-24-567/08/06}
+	\isbn{978-1-4503-4042-7}
 	%Conference
-	\conferenceinfo{PLDI '13}{June 16--19, 2013, Seattle, WA, USA}
+	\conferenceinfo{Interactive Entertainment 2016 (IE2016)}{at the Australasian Computer Science Week (ACSW 2016), Canberra, Australia, 2-5 February, 2016}
 	\acmPrice{\$15.00}
 	%
 	% --- Author Metadata here ---
-	\conferenceinfo{WOODSTOCK}{'97 El Paso, Texas USA}
+	%\conferenceinfo{WOODSTOCK}{'97 El Paso, Texas USA}
 	%\CopyrightYear{2007} % Allows default copyright year (20XX) to be over-ridden - IF NEED BE.
 	%\crdata{0-12345-67-8/90/01}	% Allows default copyright data (0-89791-88-6/97/05) to be over-ridden - IF NEED BE.
 	% --- End of Author Metadata ---
@@ -236,11 +237,11 @@
 	%
 	% \printccsdesc
 
-	\keywords{computer vision, sphere detection, adaboost}
+	\keywords{computer vision, sphere detection, adaboost, classification}
 
 	\section{Introduction} {
 	\label{sec:intro}
-Central to the game of football or soccer is the task of detecting and tracking the ball. While	two competing teams interact in gaining control over the ball on the field there is also a large crowd of emotional spectators that all try to solve the question ``Where is the ball?" and to follow it visually. While it appears to come naturally to humans, fast and reliable ball detection has presented a significant challenge that has attracted much research, for example, in the robot soccer community~\cite{KitanoEtAl1997}.
+Central to the game of football or soccer is the task of detecting and tracking the ball. While two competing teams interact in gaining control over the ball on the field there is also a large crowd of emotional spectators that all try to solve the question ``Where is the ball?" and to follow it visually. While it appears to come naturally to humans, fast and reliable ball detection has presented a significant challenge that has attracted much research, for example, in the robot soccer community~\cite{KitanoEtAl1997}.
 
 
 %	\section{Related Work} {
@@ -249,14 +250,21 @@ Central to the game of football or soccer is the task of detecting and tracking 
 		%Visually keeping track of a ball is a natural and fundamental aspect of playing soccer, that many human players would not consider to be a skill in itself.
 
 
-		Early attempts at ball detection algorithms used in the international robot soccer competition, RoboCup, used simple histogramming techniques targeted at a specific range of colour intensities to find a coloured ball on a green field. As the RoboCup playing field has become less structured over the years, competing teams have needed to account for unpredictable colours and have increasingly implemented methods that detect the shape of the ball as well. Schulz et al. \citet{schulz2007ball} used a neural network on subsampled luminance images of the ball to detect the shape of the ball. Recent approaches have focused on detecting the approximately circular shape of the ball in typical images. These include clustering, Hough filters \citep{li2013survey}, and RANSAC.% TODO: Add back RANSAC reference ~\citep{annable2013nubots}.
+		Early attempts at ball detection algorithms used in the international robot soccer competition, RoboCup, used simple histogramming techniques targeted at a specific range of colour intensities to find a coloured ball on a green field. As the RoboCup playing field has become less structured over the years, competing teams have needed to account for unpredictable colours and have increasingly implemented methods that detect the shape of the ball as well~\citep{MurchChalup2004}. Schulz et al.~\citet{schulz2007ball} used a neural network on subsampled luminance images of the ball to detect the shape of the ball. Recent approaches have focused on detecting the approximately circular shape of the ball in typical images. These include clustering, Hough filters \citep{li2013survey}, and RANSAC~\citep{annable2013nubots,FischlerBolles1981}.
 
-		Many current ball detection methods make assumptions about the ball or the environment that limit their applicability in a more general case. Methods based on colour classification or similarity can suffer from false positive detections due to other objects having similar colours. These methods may also detect both false positives and false negatives due to unexpected changes in lighting. Methods based on circle or ellipse detection can be prone to false positives due to the presence of disk-like objects in the environment, or due to objects that appear circular when viewed from specific angles.
+		Many current ball detection methods make assumptions about the ball or the environment that limit their applicability in a more general case. Methods based on colour classification or similarity can suffer from false positive detections due to other objects having similar colours. These methods may also detect both false positives and false negatives due to unexpected changes in lighting ~\citep{HendersonEtAl2008}. Methods based on circle or ellipse detection can be prone to false positives due to the presence of disk-like objects in the environment, or due to objects that appear circular when viewed from specific angles.
 
 		To avoid the limitations of methods based on assumptions such as these, we developed a sphere detection method which uses the shading patterns characteristic of spherical objects to classify objects as spheres.
 
 		Nillius et al. \citet{nillius2008shading} perform shading based sphere detection using Principal Component Analysis (PCA) with a basis derived analytically from a given Bidirectional Reflectance Distribution Function (BRDF) and assumptions on scene illumination. While this method works well for plain untextured spheres, it is
 		not designed to work on spheres with patterns printed on them, like many soccer balls.
+		
+		
+		
+		
+		
+% compile / extracted
+
 
 		To build a detector that is more robust to differently textured spheres, we investigated the application of techniques popularised in the realm of face detection to the task of sphere detection. We consider this a promising approach, because the 3D shading features of spheres tend to have similar spatial constraints to facial features in many cases. We assumed that the balls to be detected are resting on the ground and are illuminated from above to constrain the likely positions of shadows and specular highlights.
 
@@ -284,6 +292,12 @@ Central to the game of football or soccer is the task of detecting and tracking 
 %		The hypothesis was tested through the experiment outlined in Section~\ref{sec:experiment}.
 
 	}
+
+
+
+
+
+
 
 	\section{Experiment} {
 	\label{sec:experiment}
@@ -318,7 +332,7 @@ Central to the game of football or soccer is the task of detecting and tracking 
 
 		\begin{table}
 			\centering
-			\caption{A summary of the 12 experimental trials.}
+			\caption{A summary of the 12 experimental trials}
 			\label{tab:training_schemes}
 			% \scalebox{0.8}{
 			\begin{tabularx}{\columnwidth}{@{}rX@{}}
@@ -360,20 +374,14 @@ Central to the game of football or soccer is the task of detecting and tracking 
 			% 	Note that in designing the training schemes, the set size of each training schemes that used the simple training set were restricted to be lower than those that used the full training set, due to the far lesser number of images in the simple set.
 		\end{enumerate}
 
-		\subsection{Image Dataset Compilation} {
-		\label{sec:dataset}
-      ImageNet \citep{imagenet_cvpr09} is an image database organised according to the WordNet hierarchy \citep{fellbaum1998wordnet} that was used as a source of training and testing data. This resource offers a wide range of images along with associated class and bounding box information. The use of ImageNet has facilitated the collection of many more training samples than would be possible to collect manually within the time-frame of this project.
 
-			Only images that contained bounding box information were extracted from ImageNet for use as positive training samples. Prior to training, each positive sample was cropped from its original image, using the provided bounding box information, before being	resized to \(24\times24\) pixels and converted to grayscale. An example of this process has been demonstrated in Figure~\ref{fig:samples}.
-
-			% compile / extracted
 
 			\newcommand{\samplefigurewidth}{0.45\textwidth}
 			\newcommand{\samplewidth}{0.14\textwidth}
 			\newcommand{\sampleheight}{0.14\textwidth}
 			\newcommand{\includesample}[1]{\hspace{0.1cm}\includegraphics[width=\samplewidth,height=\sampleheight]{images/training/#1}}
 
-			\begin{figure}
+			\begin{figure}[h]
 				\centering
 				\subfigure[Positive samples.]{%
 					% Enclose in shortstack to enable line break.
@@ -407,7 +415,19 @@ Central to the game of football or soccer is the task of detecting and tracking 
 				\caption{Examples of positive (a) and hard negative (b) samples used for training. The first row represents the original image, while the second row represents the same samples that have been cropped, resized and converted to grayscale prior to training.}
 				\label{fig:samples}
 			\end{figure}
+			
+			\enlargethispage*{1mm}
 
+
+
+
+		\subsection{Image Dataset Compilation} {
+		\label{sec:dataset}
+      ImageNet \citep{imagenet_cvpr09} is an image database organised according to the WordNet hierarchy \citep{fellbaum1998wordnet} that was used as a source of training and testing data. This resource offers a wide range of images along with associated class and bounding box information. The use of ImageNet has facilitated the collection of many more training samples than would be possible to collect manually within the time-frame of this project.
+
+			Only images that contained bounding box information were extracted from ImageNet for use as positive training samples. Prior to training, each positive sample was cropped from its original image, using the provided bounding box information, before being	resized to \(24\times24\) pixels and converted to grayscale. An example of this process has been demonstrated in Figure~\ref{fig:samples}.
+
+			
 			Several WordNet categories (known as \newterm{synsets}) were used to compile the training and test set for this project. Table~\ref{tab:positive_samples} represents the positive samples used in the training set. The images for the negative training set were drawn from both the list of categories of disk-like objects in Table~\ref{tab:negative_samples}, and the list of categories of background images given in Table~\ref{tab:background_samples}.
       All \newterm{hyponyms} (synsets representing subcategories) of the listed synsets were also included in the dataset, except for those listed in Table~\ref{tab:blacklisted_synsets}, as they contained images of objects that were considered too far from either spheres or circles in shape.
       A randomly selected 20\% of the samples of each of the two sample sets was set aside for use as a test set before beginning training.
@@ -418,7 +438,7 @@ Central to the game of football or soccer is the task of detecting and tracking 
       The background training set was constructed by randomly sampling one square window from each background image, with side lengths uniformly sampled to be between 20\% and 100\% of the size of the smaller dimension of the image.
 
       % TODO: Consider removing usage examples, or the entire `sense' column for a reasonable amount of extra space. Or summarise these tables in a short paragraph.
-			\begin{table}
+			\begin{table}[t]
 				\centering
 				\caption{ImageNet synsets used for the positive samples in the training set and their associated WordNet identifiers.}
 				\label{tab:positive_samples}
@@ -436,7 +456,7 @@ Central to the game of football or soccer is the task of detecting and tracking 
 				\end{tabularx}
 			\end{table}
 
-      \begin{table}
+      \begin{table}[t]
         \centering
         \caption{ImageNet synsets used for the negative samples in the training set and their associated WordNet identifiers.}
 				\label{tab:negative_samples}
@@ -455,7 +475,7 @@ Central to the game of football or soccer is the task of detecting and tracking 
         \end{tabularx}
       \end{table}
 
-      \begin{table}
+      \begin{table}[t]
         \centering
         \caption{ImageNet synsets used for the background samples in the training set and their associated WordNet identifiers.}
 				\label{tab:background_samples}
@@ -473,7 +493,7 @@ Central to the game of football or soccer is the task of detecting and tracking 
         \end{tabularx}
       \end{table}
 
-      \begin{table}
+      \begin{table}[h]
         \centering
         \caption{Blacklisted ImageNet synsets and their associated WordNet identifiers.}
         \label{tab:blacklisted_synsets}
@@ -637,7 +657,7 @@ Central to the game of football or soccer is the task of detecting and tracking 
   		This test involved the use of a HD webcam to perform live object detection. The webcam was presented with a number of balls with the intention of observing the robustness of the trained sphere detector.
   		This experiment appeared to perform quite well and detected most of the balls in the scene. The sphere detector, however, did not perform well when presented with a highly textured ball as seen in Figure~\ref{fig:fifa_ball}.
 
-  		It was also noted that the detector could not detect the balls when the webcam was significantly rotated, such that the ball was upside down with respect to the camera. This effect is illustrated in Figure~\ref{fig:rotated_sequence}. This supports the suggestion that the detectors using Haar features perform shading based detection and not simply circle detection.
+  		It was also noted that the detector did not detect the balls when the webcam was significantly rotated, such that the ball (and its shading pattern) was upside down with respect to the camera. This effect is illustrated in Figure~\ref{fig:rotated_sequence}. This supports the suggestion that the detectors using Haar features perform shading based detection and not simply circle detection.
     }
 		% \todo{re-run the live classification test}
 
@@ -670,7 +690,7 @@ Central to the game of football or soccer is the task of detecting and tracking 
 
     \begin{figure}
       \centering
-      \includegraphics[width=0.3\textwidth]{images/fifa_ball}
+      \includegraphics[width=0.4\textwidth]{images/fifa_ball}
       \caption{Ball that often could not be detected.}
       \label{fig:fifa_ball}
     \end{figure}
@@ -689,16 +709,17 @@ Central to the game of football or soccer is the task of detecting and tracking 
 		% \todo{The results of the experiment supported the hypothesis for classifiers using Haar features, but further testing would be required to have a high confidence that the increase in precision identified can be attributed to the increase in the proportion of disk-like negative images in the training set.
 		% Additionally, our results suggested that Haar features are better suited to the problem of sphere detection than LBPs.}
 
-    The results of the experiment supported the hypothesis for classifiers using Haar features. Further experiments would be required to determine whether the small increase in precision seen in the LBP results is significant, and whether the recall of both classifier types can be increased to a more useful level through the use of a larger training set.
+    The results of the pilot experiments supported the hypothesis for classifiers using Haar features. Further experiments would be required to determine whether the small increase in precision seen in the LBP results is significant, and whether the recall of both classifier types can be increased to a more useful level through the use of a larger training set.
     Additionally, our results suggested that Haar features are better suited to the problem of sphere detection than LBPs.
 
-		In our future work, we plan to repeat the experiment described in this paper with a greater number and variety of training schemes.
-    Additional feature descriptors such as Histograms of Oriented Gradients (HoG) will be investigated as will the use of image preprocessing techniques such as histogram equalisation, gamma intensity correction and high and low pass filtering \citep{gross2003image}.
+		Future work could repeat the experiments described in this paper with a greater number and variety of training schemes.
+    Additional feature descriptors such as Histograms of Oriented Gradients (HoG) could be investigated as well as the use of image preprocessing techniques such as histogram equalisation, gamma intensity correction and high and low pass filtering \citep{gross2003image}.
     The preprocessing techniques would be applied to all sample windows prior to training and upon classification, in an effort to emphasise the image features that best distinguish spheres from disks and background samples.
 
     The pilot results of this study indicate that a 3D ball detector can be trained using similar techniques as are common for face detection. It remains a challenge to devise a training scheme that leads to a classifier that can detect the relatively weak 3D shading characteristics of a sphere in the presence of other strong patterns (such as shown in Figure~\ref{fig:fifa_ball}). This study aims to contribute to the development of a universal ball detector that is not trained on a specific ball with a specific pattern and is robust to changes of lighting conditions so that it can be employed e.g. in robot soccer games without recalibration.
 	}
 
+\balance
 	% \section{Acknowledgements}
 	% The authors are grateful to ....
 
