@@ -241,7 +241,7 @@
 
 	\section{Introduction} {
 	\label{sec:intro}
-Central to the game of football or soccer is the task of detecting and tracking the ball. While two competing teams interact in gaining control over the ball on the field there is also a large crowd of emotional spectators that all try to solve the question ``Where is the ball?" and to follow it visually. While it appears to come naturally to humans, fast and reliable ball detection has presented a significant challenge that has attracted much research, for example, in the robot soccer community~\cite{KitanoEtAl1997}.
+Central to the game of football or soccer is the task of detecting and tracking the ball. While two competing teams interact in gaining control over the ball on the field there is also a large crowd of emotional spectators that all try to solve the question ``Where is the ball?" and to follow it visually. While it appears to come naturally to humans, fast and reliable ball detection has presented a significant challenge that has attracted much research, for example, in the robot soccer community~\cite{KitanoEtAl1997}. Robust 3D object detection will also be important for developers of interactive entertainment applications, such as augmented reality games and networked exergames, where remote players may interact with real objects such as balls~\citep{MuellerEtAl2011}.
 
 
 %	\section{Related Work} {
@@ -716,8 +716,8 @@ Central to the game of football or soccer is the task of detecting and tracking 
     Additional feature descriptors such as Histograms of Oriented Gradients (HoG) could be investigated as well as the use of image preprocessing techniques such as histogram equalisation, gamma intensity correction and high and low pass filtering \citep{gross2003image}.
     The preprocessing techniques would be applied to all sample windows prior to training and upon classification, in an effort to emphasise the image features that best distinguish spheres from disks and background samples.
 
-    The pilot results of this study indicate that a 3D ball detector can be trained using similar techniques as are common for face detection. It remains a challenge to devise a training scheme that leads to a classifier that can detect the relatively weak 3D shading characteristics of a sphere in the presence of other strong patterns (such as shown in Figure~\ref{fig:fifa_ball}). This study aims to contribute to the development of a universal ball detector that is not trained on a specific ball with a specific pattern and is robust to changes of lighting conditions so that it can be employed e.g. in robot soccer games without recalibration.
-	}
+    The pilot results of this study indicate that a 3D ball detector can be trained using similar techniques as are common for face detection. It remains a challenge to devise a training scheme that leads to a classifier that can detect the relatively weak 3D shading characteristics of a sphere in the presence of other strong patterns (such as shown in Figure~\ref{fig:fifa_ball}). This study aims to contribute to the development of a universal ball detector that is not trained on a specific ball with a specific pattern and is robust to changes of lighting conditions so that it can be employed without recalibration. Future research plans where the results of the present study can become important include interactive game scenarios where autonomous robot soccer play is merged with robotic telepresence through virtual reality helmets. 
+}
 
 \balance
 	% \section{Acknowledgements}
