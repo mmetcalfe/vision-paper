@@ -59,7 +59,7 @@
 	% TODO: Fix metadata.
 
 	% Copyright
-	\setcopyright{acmcopyright}
+	% \setcopyright{acmcopyright}
 	%\setcopyright{acmlicensed}
 	%\setcopyright{rightsretained}
 	%\setcopyright{usgov}
@@ -67,14 +67,18 @@
 	%\setcopyright{cagov}
 	%\setcopyright{cagovmixed}
 
-% TODO: Enter corrrect conference info
-	% DOI
-	%\doi{10.475/123_4}
-	% ISBN
-	\isbn{978-1-4503-4042-7}
-	%Conference
-	\conferenceinfo{Interactive Entertainment 2016 (IE2016)}{at the Australasian Computer Science Week (ACSW 2016), Canberra, Australia, 2-5 February, 2016}
-	\acmPrice{\$15.00}
+    \CopyrightYear{2016}
+    \setcopyright{acmcopyright}
+    \conferenceinfo{ACSW '16 Multiconference,}{February 02-05, 2016, Canberra, Australia}
+    \isbn{978-1-4503-4042-7/16/02}\acmPrice{\$15.00}
+    \doi{http://dx.doi.org/10.1145/2843043.2843473}
+% 	% DOI
+% 	%\doi{10.475/123_4}
+% 	% ISBN
+% 	\isbn{978-1-4503-4042-7}
+% 	%Conference
+% 	\conferenceinfo{Interactive Entertainment 2016 (IE2016)}{at the Australasian Computer Science Week (ACSW 2016), Canberra, Australia, 2-5 February, 2016}
+% 	\acmPrice{\$15.00}
 	%
 	% --- Author Metadata here ---
 	%\conferenceinfo{WOODSTOCK}{'97 El Paso, Texas USA}
@@ -258,11 +262,11 @@ Central to the game of football or soccer is the task of detecting and tracking 
 
 		Nillius et al. \citet{nillius2008shading} perform shading based sphere detection using Principal Component Analysis (PCA) with a basis derived analytically from a given Bidirectional Reflectance Distribution Function (BRDF) and assumptions on scene illumination. While this method works well for plain untextured spheres, it is
 		not designed to work on spheres with patterns printed on them, like many soccer balls.
-		
-		
-		
-		
-		
+
+
+
+
+
 % compile / extracted
 
 
@@ -415,7 +419,7 @@ Central to the game of football or soccer is the task of detecting and tracking 
 				\caption{Examples of positive (a) and hard negative (b) samples used for training. The first row represents the original image, while the second row represents the same samples that have been cropped, resized and converted to grayscale prior to training.}
 				\label{fig:samples}
 			\end{figure}
-			
+
 			\enlargethispage*{1mm}
 
 
@@ -427,7 +431,7 @@ Central to the game of football or soccer is the task of detecting and tracking 
 
 			Only images that contained bounding box information were extracted from ImageNet for use as positive training samples. Prior to training, each positive sample was cropped from its original image, using the provided bounding box information, before being	resized to \(24\times24\) pixels and converted to grayscale. An example of this process has been demonstrated in Figure~\ref{fig:samples}.
 
-			
+
 			Several WordNet categories (known as \newterm{synsets}) were used to compile the training and test set for this project. Table~\ref{tab:positive_samples} represents the positive samples used in the training set. The images for the negative training set were drawn from both the list of categories of disk-like objects in Table~\ref{tab:negative_samples}, and the list of categories of background images given in Table~\ref{tab:background_samples}.
       All \newterm{hyponyms} (synsets representing subcategories) of the listed synsets were also included in the dataset, except for those listed in Table~\ref{tab:blacklisted_synsets}, as they contained images of objects that were considered too far from either spheres or circles in shape.
       A randomly selected 20\% of the samples of each of the two sample sets was set aside for use as a test set before beginning training.
@@ -716,7 +720,7 @@ Central to the game of football or soccer is the task of detecting and tracking 
     Additional feature descriptors such as Histograms of Oriented Gradients (HoG) could be investigated as well as the use of image preprocessing techniques such as histogram equalisation, gamma intensity correction and high and low pass filtering \citep{gross2003image}.
     The preprocessing techniques would be applied to all sample windows prior to training and upon classification, in an effort to emphasise the image features that best distinguish spheres from disks and background samples.
 
-    The pilot results of this study indicate that a 3D ball detector can be trained using similar techniques as are common for face detection. It remains a challenge to devise a training scheme that leads to a classifier that can detect the relatively weak 3D shading characteristics of a sphere in the presence of other strong patterns (such as shown in Figure~\ref{fig:fifa_ball}). This study aims to contribute to the development of a universal ball detector that is not trained on a specific ball with a specific pattern and is robust to changes of lighting conditions so that it can be employed without recalibration. Future research plans where the results of the present study can become important include interactive game scenarios where autonomous robot soccer play is merged with robotic telepresence through virtual reality helmets. 
+    The pilot results of this study indicate that a 3D ball detector can be trained using similar techniques as are common for face detection. It remains a challenge to devise a training scheme that leads to a classifier that can detect the relatively weak 3D shading characteristics of a sphere in the presence of other strong patterns (such as shown in Figure~\ref{fig:fifa_ball}). This study aims to contribute to the development of a universal ball detector that is not trained on a specific ball with a specific pattern and is robust to changes of lighting conditions so that it can be employed without recalibration. Future research plans where the results of the present study can become important include interactive game scenarios where autonomous robot soccer play is merged with robotic telepresence through virtual reality helmets.
 }
 
 \balance
