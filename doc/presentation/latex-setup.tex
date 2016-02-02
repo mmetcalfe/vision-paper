@@ -1,0 +1,68 @@
+\documentclass{beamer}
+\usepackage{graphicx}
+%\usepackage{epstopdf}
+\usepackage{grffile}
+\usepackage{amsmath, amssymb, amsbsy, amstext}
+% \usepackage{xcolor}
+\usepackage{subfigure}
+
+% \usepackage[utf8]{inputenc}
+\usepackage{natbib}
+
+% \usepackage[disable]{todonotes}
+\usepackage{todonotes}
+\presetkeys{todonotes}{inline}{}
+
+% \usepackage[table]{xcolor}
+\usepackage{booktabs} % for much better looking tables
+\usepackage{tabularx}
+
+\usepackage{pseudocode}
+
+\usepackage[binary-units]{siunitx}            % For SI units
+% \usepackage{enumitem} % control layout of itemize, enumerate, description
+
+\usepackage{pgf}
+\usepackage{pgfgantt} % gantt charts
+
+\usepackage{pgfplots}
+\pgfplotsset{width=\textwidth,compat=1.9}
+
+% \usepackage{multimedia}
+% \usepackage{media9}
+
+\usepackage[export]{adjustbox}[2011/08/13] % for centering wide figures
+
+\usepackage{hyperref}
+
+
+\newcommand{\code}[1]{{\texttt{#1}}}
+\newcommand{\libraryname}[1]{{\texttt{#1}}}
+\newcommand{\codefile}[1]{{\textit{#1}}}
+\newcommand{\program}[1]{\code{#1}}
+\newcommand{\taskname}[1]{{\textit{#1}}}
+\newcommand{\newterm}[1]{{\textit{#1}}}
+\newcommand{\scarequotes}[1]{`#1'}
+\newcommand{\sampleswidth}{0.23\textwidth}
+\newcommand{\samplesheight}{1.5cm}
+\newcommand{\darwinop}{DARwIn-OP}
+
+% \definecolor{darkgreen}{rgb}{0,0.6,0}
+% \logo{\pgfputat{\pgfxy(-2,6)}{\pgfbox[center,base]{\includegraphics[height=2cm]{amsilogo.jpg}}}}
+
+\usetheme[protectframetitle]{m}
+% \usetheme{Darmstadt}
+% \usetheme{Dresden} %Dresden, Darmstadt, Warsaw
+% \usecolortheme{dove}
+
+\newcommand{\ganttslide}[3]{%
+\begin{frame}{#1}%
+    \begin{figure}[H]%
+    % \label{gantt:interim:prelim}
+    \centering%
+    % \makebox[\textwidth][c]{\resizebox{0.8\paperwidth}{!}{\input{gantt_interim_initial.tex}}}
+    \makebox[\textwidth][c]{\resizebox{0.8\paperwidth}{!}{\input{gantt_interim_#2.tex}}}%
+    \caption[Project Schedule] {#3}%
+  \end{figure}%
+\end{frame}%
+}

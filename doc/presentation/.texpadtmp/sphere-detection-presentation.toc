@@ -1,0 +1,8 @@
+\beamer@endinputifotherversion {3.33pt}
+\beamer@sectionintoc {1}{Background and motivation}{3}{0}{1}
+\beamer@subsectionintoc {1}{1}{Face detection}{8}{0}{1}
+\beamer@sectionintoc {2}{Hypothesis}{14}{0}{2}
+\beamer@sectionintoc {3}{Dataset}{16}{0}{3}
+\beamer@sectionintoc {4}{Experiment}{24}{0}{4}
+\beamer@sectionintoc {5}{Results}{27}{0}{5}
+\beamer@sectionintoc {6}{Conclusion}{33}{0}{6}

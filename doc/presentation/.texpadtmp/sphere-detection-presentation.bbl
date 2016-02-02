@@ -1,0 +1,76 @@
+\begin{thebibliography}{}
+
+\bibitem[Deng et~al., 2009]{imagenet_cvpr09}
+Deng, J., Dong, W., Socher, R., Li, L.-J., Li, K., and Fei-Fei, L. (2009).
+\newblock {ImageNet: A Large-Scale Hierarchical Image Database}.
+\newblock In {\em IEEE Conference on Computer Vision and Pattern Recognition,
+  2009 (CVPR 2009)}, pages 248--255.
+
+\bibitem[Kitano et~al., 1997]{KitanoAKNO97}
+Kitano, H., Asada, M., Kuniyoshi, Y., Noda, I., and Osawa, E. (1997).
+\newblock Robocup: The robot world cup initiative.
+\newblock In {\em Agents}, pages 340--347.
+
+\bibitem[Liao et~al., 2007]{liao2007learning}
+Liao, S., Zhu, X., Lei, Z., Zhang, L., and Li, S.~Z. (2007).
+\newblock Learning multi-scale block local binary patterns for face
+  recognition.
+\newblock In {\em Advances in Biometrics - International Conference, ICB 2007,
+  Seoul, Korea, August 27-29, 2007. Proceedings}, volume 4642 of {\em Lecture
+  Notes in Computer Science}, pages 828--837. Springer.
+
+\bibitem[Lienhart and Maydt, 2002]{Lienhart2002extended}
+Lienhart, R. and Maydt, J. (2002).
+\newblock An extended set of haar-like features for rapid object detection.
+\newblock In {\em International Conference on Image Processing, 2002},
+  volume~1, pages 900--903. IEEE.
+
+\bibitem[Masselli et~al., 2013]{masselli2013haar}
+Masselli, A., Hanten, R., and Zell, A. (2013).
+\newblock Robust real-time detection of multiple balls on a mobile robot.
+\newblock In {\em European Conference on Mobile Robots (ECMR 2013)}, pages
+  355--360.
+
+\bibitem[Mitri et~al., 2004]{mitri2004fast}
+Mitri, S., Perv{\"o}lz, K., Surmann, H., and N{\"u}chter, A. (2004).
+\newblock Fast color-independent ball detection for mobile robots.
+\newblock In {\em Proceedings of the IEEE Computer Society International
+  Conference Mechatronics and Robotics}, pages 900--905.
+
+\bibitem[Nillius et~al., 2008]{nillius2008shading}
+Nillius, P., Sullivan, J., and Argyros, A. (2008).
+\newblock Shading models for illumination and reflectance invariant shape
+  detectors.
+\newblock In {\em Proceedings of the IEEE Computer Society Conference on
+  Computer Vision and Pattern Recognition (CVPR 2014)}, pages 1--8, Los
+  Alamitos, CA, USA. IEEE.
+
+\bibitem[Patraucean et~al., 2012]{Patraucean:2012jf}
+Patraucean, V., Gurdjos, P., and von Gioi, R.~G. (2012).
+\newblock A parameterless line segment and elliptical arc detector with
+  enhanced ellipse fitting.
+\newblock In Fitzgibbon, A., Lazebnik, S., Perona, P., Sato, Y., and Schmid,
+  C., editors, {\em Computer Vision - ECCV 2012, 12th European Conference on
+  Computer Vision Florence, Italy, October 7-13, 2012 Proceedings, Part II},
+  volume 7573 of {\em Lecture Notes in Computer Science (LNCS)}, pages
+  572--585.
+
+\bibitem[Treptow and Zell, 2004]{treptow2004filter}
+Treptow, A. and Zell, A. (2004).
+\newblock Real-time object tracking for soccer-robots without color
+  information.
+\newblock {\em Robotics and Autonomous Systems}, 48(1):41--48.
+
+\bibitem[Viola and Jones, 2004]{viola2001robust}
+Viola, P. and Jones, M. (2004).
+\newblock Robust real-time object detection.
+\newblock {\em International Journal of Computer Vision}, 57(2):137--154.
+
+\bibitem[Zhang et~al., 2013]{zhang2013novel}
+Zhang, H., Lu, H., Dong, P., Xiong, D., and Zheng, Z. (2013).
+\newblock A novel generic ball recognition algorithm based on omnidirectional
+  vision for soccer robots.
+\newblock {\em International \hspace{1.5cm} Journal of Advanced Robotic
+  Systems}, 10(388).
+
+\end{thebibliography}

@@ -1,0 +1,13 @@
+\beamer@slide {tab:positive_samples}{18}
+\beamer@slide {tab:blacklisted_synsets}{19}
+\beamer@slide {tab:background_samples}{20}
+\beamer@slide {tab:negative_samples}{21}
+\beamer@slide {fig:positive_samples}{23}
+\beamer@slide {fig:negative_samples}{23}
+\beamer@slide {fig:samples}{23}
+\beamer@slide {tab:training_schemes}{26}
+\beamer@slide {fig:trial_comparison_chart_recall}{30}
+\beamer@slide {fig:trial_comparison_chart_precision}{30}
+\beamer@slide {fig:trial_comparison_charts}{30}
+\beamer@slide {fig:fifa_ball}{31}
+\beamer@slide {fig:rotated_sequence}{32}
